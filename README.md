@@ -1,5 +1,23 @@
 # COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University
 
+We try to use the same data format and keep the changes minimal.
+
+## Notes on added data
+
+We augmented CSV files from `csse_covid_19_daily_reports` folder by adding lines
+like:
+
+* Moscow,Russia,2020-03-21T00:00:00,5,0,0,55.75222,37.61556
+* "Saint Petersburg",Russia,2020-03-21T00:00:00,4,0,2,59.93863,30.31413 (TODO)
+
+## Russia-related Sources:
+
+* https://t.me/NovelCoronaVirusChannel
+* https://yandex.ru/maps/covid19
+
+
+# 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+
 
 This is the data repository for the 2019 Novel Coronavirus Visual Dashboard operated by the Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE). Also, Supported by ESRI Living Atlas Team and the Johns Hopkins University Applied Physics Lab (JHU APL).
 
