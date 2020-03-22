@@ -10,6 +10,11 @@ like:
 * Moscow,Russia,2020-03-21T00:00:00,5,0,0,55.75222,37.61556
 * "Saint Petersburg",Russia,2020-03-21T00:00:00,4,0,2,59.93863,30.31413 (TODO)
 
+## Pending data
+
+Due to a gap between Yandex/Rospotrebnadzor and CCSE updates, we store the
+latest absolute numbers of Yandex in [this file](./Pending.md).
+
 ## Russia-related Sources:
 
 * https://www.rospotrebnadzor.ru/about/info/news/
