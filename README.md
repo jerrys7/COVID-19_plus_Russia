@@ -12,6 +12,7 @@ like:
 
 ## Russia-related Sources:
 
+* https://www.rospotrebnadzor.ru/about/info/news/
 * https://t.me/NovelCoronaVirusChannel
 * https://yandex.ru/maps/covid19
 
