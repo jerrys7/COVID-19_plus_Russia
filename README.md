@@ -1,11 +1,22 @@
 # COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University
 
-We try to use the same data format and keep the changes minimal.
+### Goals
 
-### Pending data
+1. Provide COVID19 dataset containing Russian cities information.
+2. Maintain CSSE compatibility
+3. Provide some higher level APIs
 
-Due to a gap between Yandex/Rospotrebnadzor and CCSE updates, we store the
-latest absolute numbers by Yandex in [this file](./Pending.md).
+[Discussion](https://github.com/grwlf/COVID-19_plus_Russia/issues/1)
+
+### Contents
+
+* `csse_covid_19_data` contains CSV files which were released by CSSE and later
+  amended by us.
+* [python3](./python3) folder contains stub and development tools:
+  - `covid19ru.check` module for checking certain invariants
+* [Pending.md](./Pending.md). Due to a 1-day gap between Yandex/Rospotrebnadzor
+  and CCSE updates, we store the latest absolute numbers by Yandex in this file
+  for manual processing.
 
 ### Russia-related Sources:
 
@@ -21,17 +32,27 @@ Related repos:
 * https://github.com/klevin92/covid19_moscow_cases
 * https://github.com/wolfxyx/moscow-covid-19
 
-### TODO
+### Roadmap
 
-- Python code to check the correctness of CSV files
-- Python API to access the CSV data. It should handle the CSV format change
+* Python code to check the correctness of CSV files
+  - ~~Python stub checking the validity of basic CSV structure~~ (see <./python3/src/covid19ru/check.py>)
+  - Check less-trivial invariants
+* Python API to access the CSV data. It should handle the CSV format change
   which happened around 23.03.2020
+  - Pandas API
+  - ???
+* Semi-automated data loader for Yandex. Ideally, we want to perform the
+  following actions:
+  - Collect `Confirmed/Death/Recovered` info for each Russian city
+  - Save this information in a temporary file
+  - Apply this information to a CSSE daily reports CSVs once they are released.
+* Collect information on more cities!
 
 ### Log
 
 #### 25.03.2020
 
-* Resolved a conflict. `23-22-2020.csv` file seemed to be damaged by the upstream admins.
+* Conflict resolved. `23-22-2020.csv` file seemed to be damaged by the upstream admins.
 * <https://github.com/CSSEGISandData/COVID-19/issues/1523>
 
 #### 23.03.2020
