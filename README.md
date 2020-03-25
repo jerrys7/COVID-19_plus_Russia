@@ -47,6 +47,7 @@ Upstream format change: now
 #### 25.03.2020
 
 * Resolved a conflict. `23-22-2020.csv` file seemed to be damaged by the upstream admins.
+* <https://github.com/CSSEGISandData/COVID-19/issues/1523>
 
 **Original README.md starts here**
 
