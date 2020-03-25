@@ -3374,8 +3374,8 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Qatar,2020-03-23 23:19:21,25.3548,51.1839,501,0,33,468,Qatar
 ,,,Romania,2020-03-23 23:19:21,45.9432,24.9668,576,7,73,496,Romania
 ,,,Russia,2020-03-23 23:19:21,61.52401,105.31875600000001,438,1,17,420,Russia
-,,Moscow,Russia,2020-03-24 10:50:00,55.75222,37.61556,262,1,9,"Moscow, Russia"
-,,"Saint Petersburg",Russia,2020-03-24 10:50:00,59.93863,30.31413,16,0,2,"Saint Petersburg, Russia"
+,,Moscow,Russia,2020-03-24 10:50:00,55.75222,37.61556,262,1,9,,"Moscow, Russia"
+,,"Saint Petersburg",Russia,2020-03-24 10:50:00,59.93863,30.31413,16,0,2,,"Saint Petersburg, Russia"
 ,,,Rwanda,2020-03-23 23:19:21,-1.9403,29.8739,36,0,0,36,Rwanda
 ,,,Saint Lucia,2020-03-23 23:19:21,13.9094,-60.9789,3,0,0,3,Saint Lucia
 ,,,Saint Vincent and the Grenadines,2020-03-23 23:19:21,12.9843,-61.2872,1,0,0,1,Saint Vincent and the Grenadines
