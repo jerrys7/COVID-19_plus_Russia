@@ -32,10 +32,15 @@ Related repos:
 * https://github.com/klevin92/covid19_moscow_cases
 * https://github.com/wolfxyx/moscow-covid-19
 
+Visualizations:
+
+* https://github.com/AaronWard/covid-19-analysis
+
 ### Roadmap
 
 * Python code to check the correctness of CSV files
-  - ~~Python stub checking the validity of basic CSV structure~~ (see <./python3/src/covid19ru/check.py>)
+  - ~~Python stub checking the validity of basic CSV structure~~ (see
+    [./python3/src/covid19ru/check.py](./python3/src/covid19ru/check.py) )
   - Check less-trivial invariants
 * Python API to access the CSV data. It should handle the CSV format change
   which happened around 23.03.2020
