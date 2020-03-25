@@ -5,11 +5,10 @@ from os.path import (
     basename, join, isfile, isdir, islink, relpath, abspath, dirname, split,
     getsize )
 
+from .defs import COVID19RU_ROOT
 from pandas import DataFrame, read_csv
 
 from typing import ( Any, List, Dict, Tuple, NamedTuple )
-
-COVID19RU_ROOT=join('..','csse_covid_19_data','csse_covid_19_daily_reports')
 
 Error=NamedTuple('Error',[('file',str),('text',str)])
 
