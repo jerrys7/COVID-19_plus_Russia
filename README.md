@@ -2,9 +2,9 @@
 
 ### Goals
 
-1. Provide COVID19 dataset containing Russian cities information.
+1. Provide COVID19 dataset containing detailed information on Russia.
 2. Maintain CSSE compatibility
-3. Provide some higher level APIs
+3. Provide some higher level APIs for accessing the data.
 
 [Discussion](https://github.com/grwlf/COVID-19_plus_Russia/issues/1)
 
@@ -45,12 +45,16 @@ Visualizations:
 * Python API to access the CSV data. It should handle the CSV format change
   which happened around 23.03.2020
   - Pandas API
+  - Provide compatibility level for data before 23.03.2020
   - ???
-* Semi-automated data loader for Yandex. Ideally, we want to perform the
+* Semi-automated data loader from Yandex. Ideally, we want to perform the
   following actions:
-  - Collect `Confirmed/Death/Recovered` info for each Russian city
-  - Save this information in a temporary file
-  - Apply this information to a CSSE daily reports CSVs once they are released.
+  - ~~Collect `Confirmed/Death/Recovered` info for each Russian city~~ (starting
+    from `03-25-2020.csv`)
+  - ~~Save this information in a temporary file to handle update gap~~
+  - Set correct value of Longitude/Latitude for Russian districts
+  - Figure out what does 'Active' field mean and how to get it
+  - Daily update CSSE with Russian state information
 * Collect information on more cities!
 
 ### Log
@@ -59,13 +63,14 @@ Visualizations:
 
 * Conflict resolved. `23-22-2020.csv` file seemed to be damaged by the upstream admins.
 * <https://github.com/CSSEGISandData/COVID-19/issues/1523>
+* Implemented Yandex data fetcher
 
 #### 23.03.2020
 
 Upstream format change: now
 
-* `,,Moscow,Russia,2020-03-24 00:00:00,55.75222,37.61556,262,1,9,"Moscow, Russia"`
-* `,,"Saint Petersburg",Russia,2020-03-22 00:00:00,59.93863,30.31413,16,0,2,"Saint Petersburg, Russia"`
+* `,,Moscow,Russia,2020-03-24 00:00:00,55.75222,37.61556,262,1,9,,"Moscow, Russia"`
+* `,,"Saint Petersburg",Russia,2020-03-22 00:00:00,59.93863,30.31413,16,0,2,,"Saint Petersburg, Russia"`
 
 #### 21.03.2020
 
