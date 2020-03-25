@@ -2,32 +2,50 @@
 
 We try to use the same data format and keep the changes minimal.
 
-## Notes on added data
+### Pending data
+
+Due to a gap between Yandex/Rospotrebnadzor and CCSE updates, we store the
+latest absolute numbers by Yandex in [this file](./Pending.md).
+
+### Russia-related Sources:
+
+Data sources:
+
+* https://www.rospotrebnadzor.ru/about/info/news/
+* https://t.me/NovelCoronaVirusChannel
+* https://yandex.ru/maps/covid19
+
+Related repos:
+
+* https://github.com/AlexxIT/YandexCOVID
+* https://github.com/klevin92/covid19_moscow_cases
+* https://github.com/wolfxyx/moscow-covid-19
+
+### TODO
+
+- Python code to check the correctness of CSV files
+- Python API to access the CSV data. It should handle the CSV format change
+  which happened around 23.03.2020
+
+### Log
+
+#### 21.03.2020
 
 We augmented CSV files from `csse_covid_19_daily_reports` folder by adding lines
 like:
 
 * `Moscow,Russia,2020-03-21T00:00:00,5,0,0,55.75222,37.61556`
-* `"Saint Petersburg",Russia,2020-03-21T00:00:00,4,0,2,59.93863,30.31413 (TODO)`
+* `"Saint Petersburg",Russia,2020-03-21T00:00:00,4,0,2,59.93863,30.31413`
 
-### 23.03.2020
+#### 23.03.2020
 
 Upstream format change: now
 
 * `,,Moscow,Russia,2020-03-24 00:00:00,55.75222,37.61556,262,1,9,"Moscow, Russia"`
 * `,,"Saint Petersburg",Russia,2020-03-22 00:00:00,59.93863,30.31413,16,0,2,"Saint Petersburg, Russia"`
 
-## Pending data
 
-Due to a gap between Yandex/Rospotrebnadzor and CCSE updates, we store the
-latest absolute numbers of Yandex in [this file](./Pending.md).
-
-## Russia-related Sources:
-
-* https://www.rospotrebnadzor.ru/about/info/news/
-* https://t.me/NovelCoronaVirusChannel
-* https://yandex.ru/maps/covid19
-
+**Original README.md starts here**
 
 # 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
 
