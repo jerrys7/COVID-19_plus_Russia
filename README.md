@@ -44,6 +44,9 @@ Upstream format change: now
 * `,,Moscow,Russia,2020-03-24 00:00:00,55.75222,37.61556,262,1,9,"Moscow, Russia"`
 * `,,"Saint Petersburg",Russia,2020-03-22 00:00:00,59.93863,30.31413,16,0,2,"Saint Petersburg, Russia"`
 
+#### 25.03.2020
+
+* Resolved a conflict. `23-22-2020.csv` file seemed to be damaged by the upstream admins.
 
 **Original README.md starts here**
 
