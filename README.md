@@ -29,13 +29,10 @@ Related repos:
 
 ### Log
 
-#### 21.03.2020
+#### 25.03.2020
 
-We augmented CSV files from `csse_covid_19_daily_reports` folder by adding lines
-like:
-
-* `Moscow,Russia,2020-03-21T00:00:00,5,0,0,55.75222,37.61556`
-* `"Saint Petersburg",Russia,2020-03-21T00:00:00,4,0,2,59.93863,30.31413`
+* Resolved a conflict. `23-22-2020.csv` file seemed to be damaged by the upstream admins.
+* <https://github.com/CSSEGISandData/COVID-19/issues/1523>
 
 #### 23.03.2020
 
@@ -44,10 +41,13 @@ Upstream format change: now
 * `,,Moscow,Russia,2020-03-24 00:00:00,55.75222,37.61556,262,1,9,"Moscow, Russia"`
 * `,,"Saint Petersburg",Russia,2020-03-22 00:00:00,59.93863,30.31413,16,0,2,"Saint Petersburg, Russia"`
 
-#### 25.03.2020
+#### 21.03.2020
 
-* Resolved a conflict. `23-22-2020.csv` file seemed to be damaged by the upstream admins.
-* <https://github.com/CSSEGISandData/COVID-19/issues/1523>
+We augmented CSV files from `csse_covid_19_daily_reports` folder by adding lines
+like:
+
+* `Moscow,Russia,2020-03-21T00:00:00,5,0,0,55.75222,37.61556`
+* `"Saint Petersburg",Russia,2020-03-21T00:00:00,4,0,2,59.93863,30.31413`
 
 **Original README.md starts here**
 
