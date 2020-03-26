@@ -16,9 +16,6 @@
   amended by us.
 * [python3](./python3) folder contains stub and development tools:
   - `covid19ru.check` module for checking certain invariants
-* [Pending.md](./Pending.md). Due to a 1-day gap between Yandex/Rospotrebnadzor
-  and CCSE updates, we store the latest absolute numbers by Yandex in this file
-  for manual processing.
 
 ### Russia-related Sources:
 
@@ -54,10 +51,10 @@ Visualizations:
   - ~~Collect `Confirmed/Death/Recovered` info for each Russian city~~ (starting
     from `03-25-2020.csv`)
   - ~~Save this information in a temporary file to handle update gap~~
-  - ~~Set correct value of Longitude/Latitude for Russian districts~~
+  - ~~Set correct value of Longitude/Latitude for Russian regions~~
   - Figure out what does 'Active' field mean and how to get it
   - Daily update CSSE with Russian state information
-* Collect information on more cities!
+* Find data on Russian regions for pre- 25.03.2020 period.
 
 ### Log
 
