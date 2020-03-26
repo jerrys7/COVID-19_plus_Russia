@@ -5,8 +5,10 @@
 1. Provide COVID19 dataset containing detailed information on Russia.
 2. Maintain CSSE compatibility
 3. Provide some higher level APIs for accessing the data.
+4. Close the project after a more systematic approch is developed
 
-[Discussion](https://github.com/grwlf/COVID-19_plus_Russia/issues/1)
+* [Upstream issue](https://github.com/CSSEGISandData/COVID-19/issues/1262)
+* [Generic local discussion (if any)](https://github.com/grwlf/COVID-19_plus_Russia/issues/1)
 
 ### Contents
 
