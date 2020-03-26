@@ -52,7 +52,7 @@ Visualizations:
   - ~~Collect `Confirmed/Death/Recovered` info for each Russian city~~ (starting
     from `03-25-2020.csv`)
   - ~~Save this information in a temporary file to handle update gap~~
-  - Set correct value of Longitude/Latitude for Russian districts
+  - ~~Set correct value of Longitude/Latitude for Russian districts~~
   - Figure out what does 'Active' field mean and how to get it
   - Daily update CSSE with Russian state information
 * Collect information on more cities!
