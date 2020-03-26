@@ -16,6 +16,7 @@
   amended by us.
 * [python3](./python3) folder contains stub and development tools:
   - `covid19ru.check` module for checking certain invariants
+  - `covid19ru.fetch` Yandex data fetcher
 
 ### Russia-related Sources:
 
