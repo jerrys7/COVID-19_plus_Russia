@@ -222,5 +222,13 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING)-
   return res
 
 
+from time import sleep
+
+def monitor()->None:
+  while True:
+    format_csse2(fetch_yandex())
+    for i in range(60):
+      print(f'{60-i}..',end='',flush=True)
+      sleep(60)
 
 
