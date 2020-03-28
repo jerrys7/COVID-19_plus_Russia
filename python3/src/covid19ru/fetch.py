@@ -42,7 +42,7 @@ def fetch_yandex(dump_folder:Optional[str]=COVID19RU_PENDING)->PendingData:
           'cases': p['cases'],
           'cured': p['cured'],
           'deaths': p['deaths'],
-          'coordinates':list(p['coordinates']),
+          'coordinates':list(p['coordinates']), # [Lon,Lat] !!!
           'histogram':p.get('histogram',[])
       }
       for p in data['covidData']['items']
@@ -146,8 +146,10 @@ CITIES=[('Moscow','Москва'),
         ("Republic of Adygeia","Республика Адыгея"),
         ]
 
+Lat=float
+Lon=float
 
-LOCATION:Dict[str,Tuple[float,float]]={
+LOCATION:Dict[str,Tuple[Lat,Lon]]={
 	"Moscow":(55.75222, 37.61556),
 	"Saint Petersburg":(59.93863, 30.31413),
 	"Moscow oblast":(55.81363, 36.71631),
@@ -203,6 +205,9 @@ LOCATION:Dict[str,Tuple[float,float]]={
 	"Orel oblast":(52.96508, 36.07849),
 	"Pskov oblast":(57.8136, 28.3496),
 	"Rostov oblast":(47.23135, 39.72328),
+  "Republic of Buriatia":(54.54, 112.348699),
+  "Republic of Mordovia":(54.20, 44.319669),
+  "Repiblic of Dagestan":(42.26, 47.095742),
 }
 
 LOCATION_DEF=(61.52401,105.31875600000001)
@@ -210,7 +215,13 @@ LOCATION_DEF=(61.52401,105.31875600000001)
 CSSE2_HEADER=('FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,'
               'Confirmed,Deaths,Recovered,Active,Combined_Key')
 
-def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING)->List[str]:
+def yandex_unpack_coordinates(dat:dict, default)->Tuple[float,float]:
+  c=dat.get('coordinates')
+  if c is not None:
+    return (c[1],c[0])
+  return default
+
+def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING, assert_unknown:bool=True)->List[str]:
   """ Format the data in the new CCSE format.
 
   Example output:
@@ -219,9 +230,12 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING)-
   """
   res = []
   for c_ru,dat in data.val.items():
+    if (not assert_unknown) and (not c_ru in {ru:en for en,ru in CITIES}):
+      continue
     c_en={ru:en for en,ru in CITIES}[c_ru]
+
     update_time = data.utcnow.strftime("%Y-%m-%d %H:%M:%S")
-    loc_lat,loc_lon = LOCATION.get(c_en,dat.get('coordinates',LOCATION_DEF))
+    loc_lat,loc_lon = LOCATION.get(c_en, yandex_unpack_coordinates(dat,LOCATION_DEF))
     kw = f"{c_en},Russia"
     active=int(dat['cases'])-int(dat['deaths'])-int(dat['cured'])
     res.append((
