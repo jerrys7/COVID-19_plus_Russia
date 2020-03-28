@@ -29,12 +29,12 @@ sources and may not be accurate. Please use it at your own risk._
 * https://github.com/CSSEGISandData/COVID-19
   - Upstream world data by CSSE.
 * [Rospotrebnadzor](https://www.rospotrebnadzor.ru/about/info/news/)
-  - The supposedly original official data source of data on COVID19 at Russia.
-    Data is published in Russian. The source provides daily difference per
-    region and current total for the whole state. Example:
+  - The supposedly original official data source of COVID19 data in Russia.
+    Data is published in Russian as a plain text. The source provides daily
+    difference per region and current total for the whole state. Example:
     <https://www.rospotrebnadzor.ru/about/info/news/news_details.php?ELEMENT_ID=14125>
 * [Yandex COVID19 map](https://yandex.ru/maps/covid19)
-  - Yandex company provides current per-region numbers.
+  - The Yandex company provides current per-region numbers.
 * [NovelCoronaVirusChannel at Telegram](https://t.me/NovelCoronaVirusChannel)
   - Random COVID19 news in Russian.
 
