@@ -37,6 +37,7 @@ sources and may not be accurate. Please use it at your own risk._
   - The Yandex company provides current per-region numbers.
 * [NovelCoronaVirusChannel at Telegram](https://t.me/NovelCoronaVirusChannel)
   - Random COVID19 news in Russian.
+* <https://стопкоронавирус.рф//#>
 
 
 #### Update procedure
