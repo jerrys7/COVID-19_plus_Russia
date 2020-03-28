@@ -20,6 +20,7 @@ let
 
       pyls-mypy
       pyls
+      jupyter
     ]);
 
     shellHook = with pkgs; ''
