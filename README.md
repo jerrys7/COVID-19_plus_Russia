@@ -10,8 +10,8 @@
 * [Upstream issue](https://github.com/CSSEGISandData/COVID-19/issues/1262)
 * [Generic local discussion (if any)](https://github.com/grwlf/COVID-19_plus_Russia/issues/1)
 
-_Disclamer: the author doesn't have relationships with any official and
-commercial organisations. The data provided there is collected from unreliable
+_Disclamer: the author doesn't have relationships with any official or
+commercial organisations. The data provided there are collected from unreliable
 sources and may not be accurate. Please use it at your own risk._
 
 ### Contents
