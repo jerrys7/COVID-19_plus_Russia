@@ -24,12 +24,15 @@ def timestring(dt:Optional[datetime]=None)->str:
   return dt2.strftime(TIME)
 
 
+def fetch_yandex_text()->str:
+  with request.urlopen('https://yandex.ru/web-maps/covid19') as response:
+    return response.read().decode('utf-8')
+
 def fetch_yandex(dump_folder:Optional[str]=COVID19RU_PENDING)->PendingData:
   """ Fetch COVID19 data from Yandex
   Based on https://github.com/AlexxIT/YandexCOVID/blob/master/custom_components/yandex_covid/sensor.py
   """
-  with request.urlopen('https://yandex.ru/web-maps/covid19') as response:
-    text = response.read().decode('utf-8')
+  text = fetch_yandex_text()
 
   m = RE_HTML.search(text)
   data = json.loads(m[1])
@@ -38,18 +41,20 @@ def fetch_yandex(dump_folder:Optional[str]=COVID19RU_PENDING)->PendingData:
       p['name']: {
           'cases': p['cases'],
           'cured': p['cured'],
-          'deaths': p['deaths']
+          'deaths': p['deaths'],
+          'coordinates':list(p['coordinates'])
       }
       for p in data['covidData']['items']
+      if 'ru' in p and p['ru']==True
   }
 
-  items = data['covidData']['stat']['items']
-  attrs['Россия'] = {
-      'cases': int(items[0]['value']),
-      'new_cases': int(items[1]['value']),
-      'cured': int(items[2]['value']),
-      'deaths': int(items[3]['value'])
-  }
+  # items = data['covidData']['stat']['items']
+  # attrs['Россия'] = {
+  #     'cases': int(items[0]['value']),
+  #     'new_cases': int(items[1]['value']),
+  #     'cured': int(items[2]['value']),
+  #     'deaths': int(items[3]['value'])
+  # }
   # print(attrs)
   m = re.search(r', (.+?) \(', data['covidData']['subtitle'])
   state = m[1]
@@ -130,7 +135,14 @@ CITIES=[('Moscow','Москва'),
         ("Volgograd oblast","Волгоградская область"),
         ("Orel oblast","Орловская область"),
         ("Pskov oblast","Псковская область"),
-        ("Rostov oblast","Ростовская область")
+        ("Rostov oblast","Ростовская область"),
+        ("Republic of Buriatia","Республика Бурятия"),
+        ("Republic of Mordovia","Республика Мордовия"),
+        ("Repiblic of Dagestan","Республика Дагестан"),
+        ("Sahalin oblast","Сахалинская область"),
+        ("Kostroma oblast","Костромская область"),
+        ("Smolensk oblast","Смоленская область"),
+        ("Republic of Adygeia","Республика Адыгея"),
         ]
 
 
@@ -205,10 +217,10 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING)-
   ,,Moscow,Russia,2020-03-24 10:50:00,55.75222,37.61556,262,1,9,"Moscow, Russia"
   """
   res = []
-  for c_en,c in CITIES:
+  for c_ru,dat in data.val.items():
+    c_en={ru:en for en,ru in CITIES}[c_ru]
     update_time = data.utcnow.strftime("%Y-%m-%d %H:%M:%S")
-    loc_lat,loc_lon = LOCATION.get(c_en, LOCATION_DEF)
-    dat = data.val[c]
+    loc_lat,loc_lon = LOCATION.get(c_en,dat.get('coordinates',LOCATION_DEF))
     kw = f"{c_en},Russia"
     active=int(dat['cases'])-int(dat['deaths'])-int(dat['cured'])
     res.append((
