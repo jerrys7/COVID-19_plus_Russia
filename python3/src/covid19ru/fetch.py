@@ -42,7 +42,8 @@ def fetch_yandex(dump_folder:Optional[str]=COVID19RU_PENDING)->PendingData:
           'cases': p['cases'],
           'cured': p['cured'],
           'deaths': p['deaths'],
-          'coordinates':list(p['coordinates'])
+          'coordinates':list(p['coordinates']),
+          'histogram':p.get('histogram',[])
       }
       for p in data['covidData']['items']
       if 'ru' in p and p['ru']==True
