@@ -139,8 +139,8 @@ CITIES=[('Moscow','Москва'),
         ("Rostov oblast","Ростовская область"),
         ("Republic of Buriatia","Республика Бурятия"),
         ("Republic of Mordovia","Республика Мордовия"),
-        ("Repiblic of Dagestan","Республика Дагестан"),
-        ("Sahalin oblast","Сахалинская область"),
+        ("Republic of Dagestan","Республика Дагестан"),
+        ("Sakhalin oblast","Сахалинская область"),
         ("Kostroma oblast","Костромская область"),
         ("Smolensk oblast","Смоленская область"),
         ("Republic of Adygeia","Республика Адыгея"),
@@ -207,7 +207,7 @@ LOCATION:Dict[str,Tuple[Lat,Lon]]={
 	"Rostov oblast":(47.23135, 39.72328),
   "Republic of Buriatia":(54.54, 112.348699),
   "Republic of Mordovia":(54.20, 44.319669),
-  "Repiblic of Dagestan":(42.26, 47.095742),
+  "Republic of Dagestan":(42.26, 47.095742),
 }
 
 LOCATION_DEF=(61.52401,105.31875600000001)
