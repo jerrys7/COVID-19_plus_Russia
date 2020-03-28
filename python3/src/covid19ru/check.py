@@ -41,19 +41,17 @@ def check_file(filepath:str, cs:CheckerState)->List[Error]:
       print('.....skipping',end='')
     elif is_format2(filepath):
       fmt=2
-      if filedate(filepath)>=datetime(2020,3,22):
-        num_regions=2 # We have only Moscow and SPb data
-      if filedate(filepath)>=datetime(2020,3,25):
-        num_regions=55 # Full data on russian regions since this time
       ru=filter_ru(read_csv(filepath))
-      assert len(ru.index==num_regions), f'Number of regioins has changed!  Expected {num_regions}'
-      assert len(ru[ru['Confirmed']>=0].index)==num_regions, 'ill-formed confirmed'
-      assert len(ru[ru['Deaths']>=0].index)==num_regions, 'ill-formed deaths'
-      assert len(ru[ru['Recovered']>=0].index)==num_regions, 'ill-formed recovered'
-      # print(df.keys())
-
       prev=cs.prev[fmt]
       if prev is not None:
+        prev_ru=filter_ru(prev)
+        prev_regions=len(prev_ru.index)
+        num_regions=len(ru.index)
+        assert num_regions>=prev_regions, f'Number of regioins decreased!  {num_regions} < {prev_regions}'
+        assert len(ru[ru['Confirmed']>=0].index)==num_regions, 'ill-formed confirmed'
+        assert len(ru[ru['Deaths']>=0].index)==num_regions, 'ill-formed deaths'
+        assert len(ru[ru['Recovered']>=0].index)==num_regions, 'ill-formed recovered'
+
         new_regions=False
         for i,row in ru.iterrows():
           region=row['Province_State']
