@@ -210,9 +210,10 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING)-
     loc_lat,loc_lon = LOCATION.get(c_en, LOCATION_DEF)
     dat = data.val[c]
     kw = f"{c_en},Russia"
+    active=int(dat['cases'])-int(dat['deaths'])-int(dat['cured'])
     res.append((
       f",,\"{c_en}\",Russia,{update_time},{loc_lat},{loc_lon},"
-      f"{dat['cases']},{dat['deaths']},{dat['cured']},,\"{kw}\""))
+      f"{dat['cases']},{dat['deaths']},{dat['cured']},{active},\"{kw}\""))
 
   if dump_folder is not None:
     filepath = join(dump_folder,timestring(data.utcnow)+'.csv')
