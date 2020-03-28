@@ -17,7 +17,8 @@ sources and may not be accurate. Please use it at your own risk._
 ### Contents
 
 * `csse_covid_19_data` contains CSV files which were released by CSSE and later
-  amended by us.
+  amended by us. Files released after March 25 contain additional information on
+  55 regions of Russia.
 * [python3](./python3) folder contains stub and development tools:
   - `covid19ru.check` module for checking certain invariants
   - `covid19ru.fetch` Yandex data fetcher
