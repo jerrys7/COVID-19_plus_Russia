@@ -10,6 +10,10 @@
 * [Upstream issue](https://github.com/CSSEGISandData/COVID-19/issues/1262)
 * [Generic local discussion (if any)](https://github.com/grwlf/COVID-19_plus_Russia/issues/1)
 
+_Disclamer: the author doesn't have relationships with any official and
+commercial organisations. The data provided there is collected from unreliable
+sources and may not be accurate. Please use it at your own risk._
+
 ### Contents
 
 * `csse_covid_19_data` contains CSV files which were released by CSSE and later
@@ -18,15 +22,49 @@
   - `covid19ru.check` module for checking certain invariants
   - `covid19ru.fetch` Yandex data fetcher
 
-### Russia-related Sources:
+### Data
 
-Data sources:
+#### Data source description
 
-* https://www.rospotrebnadzor.ru/about/info/news/
-* https://t.me/NovelCoronaVirusChannel
-* https://yandex.ru/maps/covid19
+* https://github.com/CSSEGISandData/COVID-19
+  - Upstream world data by CSSE.
+* [Rospotrebnadzor](https://www.rospotrebnadzor.ru/about/info/news/)
+  - The supposedly original official data source of data on COVID19 at Russia.
+    Data is published in Russian. The source provides daily difference per
+    region and current total for the whole state. Example:
+    <https://www.rospotrebnadzor.ru/about/info/news/news_details.php?ELEMENT_ID=14125>
+* [Yandex COVID19 map](https://yandex.ru/maps/covid19)
+  - Yandex company provides current per-region numbers.
+* [NovelCoronaVirusChannel at Telegram](https://t.me/NovelCoronaVirusChannel)
+  - Random COVID19 news in Russian.
 
-Related repos:
+
+#### Update procedure
+
+Originally, author filled the data on Moscow and Saint Petersburg manually,
+based on `Rospotrebnadzor` and `NovelCoronaVirusChannel` data. Starting from
+March, 25 we follow the below procedure:
+
+1. Fetch hourly data from `Yandex COVID map`
+    - Fetching is done by running `monitor` function of the [fetcher
+      script](./python3/src/covid19ru/fetch.py)
+    - The data is saved into `pending` folder, stamped with UTC time.
+2. Fetch daily upstream updates by using regular `git fetch` manually.
+3. If update is available,
+    1. Rebase repository to `upstream/master` branch using `git rebase`
+    2. For every `csse_covid_19_data/csse_covid_19_daily_reports` file which doesn't
+       have russian details, do the following:
+        1. Determine the update time of 'Russia' record found in the world data.
+           The time is supposed to be UTC. The update time is often near `23:30`
+           (supposedly UTC time).
+        2. Find the russian details dump in `pending` folder which has the
+           closest UTC timestamp.
+        3. Update world information file by inserting russian details manually.
+        4. Review the format compatibility (CSV fields order, date format, etc.).
+        5. Run the [checker script](./python3/src/covid19ru/check.py).
+        6. Commit the changes to this repository.
+
+#### Related repos
 
 * https://github.com/AlexxIT/YandexCOVID
 * https://github.com/klevin92/covid19_moscow_cases
