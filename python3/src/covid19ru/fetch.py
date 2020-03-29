@@ -144,6 +144,9 @@ CITIES=[('Moscow','Москва'),
         ("Kostroma oblast","Костромская область"),
         ("Smolensk oblast","Смоленская область"),
         ("Republic of Adygeia","Республика Адыгея"),
+        ("Omsk oblast","Омская область"),
+        ("Irkutsk oblast","Иркутская область"),
+        ("Amursk oblast","Амурская область"),
         ]
 
 Lat=float
@@ -229,8 +232,10 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING, 
   ,,Moscow,Russia,2020-03-24 10:50:00,55.75222,37.61556,262,1,9,"Moscow, Russia"
   """
   res = []
+  misses = 0
   for c_ru,dat in data.val.items():
     if (not assert_unknown) and (not c_ru in {ru:en for en,ru in CITIES}):
+      misses+=1
       continue
     c_en={ru:en for en,ru in CITIES}[c_ru]
 
@@ -247,14 +252,19 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING, 
     with open(filepath,'w') as f:
       f.write('\n'.join([CSSE2_HEADER]+res))
     print(f'Saved {filepath}')
+  if misses>0:
+    print(f'Missed {misses} locations')
   return res
+
+def dryrun():
+  format_csse2(fetch_yandex(dump_folder=None), dump_folder=None, assert_unknown=True)
 
 
 from time import sleep
 
 def monitor()->None:
   while True:
-    format_csse2(fetch_yandex())
+    format_csse2(fetch_yandex(), assert_unknown=False)
     for i in range(60):
       print(f'{60-i}..',end='',flush=True)
       sleep(60)
