@@ -13,6 +13,7 @@ def plot(confirmed_min_threshold=30, show:bool=False)->None:
   out={}
   out.update(timelines(country_region='Russia'))
   out.update(timelines(country_region='Italy'))
+  out.update(timelines(country_region='Japan'))
   ndays_in_russia_after_threshold=(out['Moscow','Russia'].dates[-1]-out['Moscow','Russia'].dates[0]).days-5
 
   for (ps,cr),tl in out.items():
@@ -22,12 +23,11 @@ def plot(confirmed_min_threshold=30, show:bool=False)->None:
     if tl.confirmed[-1]<10:
       continue
 
-    ticks=[]; tick=0; confirmed=[]; dstart=None;
+    ticks=[]; tick=0; confirmed=[];
     for d,c in zip(tl.dates,tl.confirmed):
       if c<=confirmed_min_threshold:
         continue
-      dstart=d if dstart is None else dstart
-      if (d-dstart).days>ndays_in_russia_after_threshold:
+      if tick>ndays_in_russia_after_threshold:
         continue
       ticks.append(tick)
       confirmed.append(c)
