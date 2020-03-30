@@ -25,6 +25,10 @@ sources and may not be accurate. Please use it at your own risk._
 
 ### Data
 
+#### Visualization
+
+![](python3/ruscovid.png)
+
 #### Data source description
 
 * https://github.com/CSSEGISandData/COVID-19
