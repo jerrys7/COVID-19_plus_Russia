@@ -147,6 +147,12 @@ CITIES=[('Moscow','Москва'),
         ("Omsk oblast","Омская область"),
         ("Irkutsk oblast","Иркутская область"),
         ("Amursk oblast","Амурская область"),
+        ("Altayskiy kray","Алтайский край"),
+        ("Vladimir oblast","Владимирская область"),
+        ("Vologda oblast","Вологодская область"),
+        ("Republic of Kalmykia","Республика Калмыкия"),
+        ("Republic of Mariy El","Республика Марий Эл"),
+        ("Republic of Chuvashia","Республика Чувашия"),
         ]
 
 Lat=float
@@ -232,10 +238,10 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING, 
   ,,Moscow,Russia,2020-03-24 10:50:00,55.75222,37.61556,262,1,9,"Moscow, Russia"
   """
   res = []
-  misses = 0
+  misses = []
   for c_ru,dat in data.val.items():
     if (not assert_unknown) and (not c_ru in {ru:en for en,ru in CITIES}):
-      misses+=1
+      misses.append(c_ru)
       continue
     c_en={ru:en for en,ru in CITIES}[c_ru]
 
@@ -252,8 +258,8 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING, 
     with open(filepath,'w') as f:
       f.write('\n'.join([CSSE2_HEADER]+res))
     print(f'Saved {filepath}')
-  if misses>0:
-    print(f'Missed {misses} locations')
+  if len(misses)>0:
+    print(f'Missed locations: {misses}')
   return res
 
 def dryrun():

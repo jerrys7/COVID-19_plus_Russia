@@ -62,7 +62,7 @@ def check_file(filepath:str, cs:CheckerState)->List[Error]:
                 f'Confirmed decreased for {region}'
             assert row['Deaths'] >= prow['Deaths'], \
                 f'Resurrected in {region}??'
-            assert row['Recovered'] >= prow['Recovered'], 'Recovered decreased (oh no!)'
+            assert row['Recovered'] >= prow['Recovered'], f'Recovered decreased in {region} (oh no!)'
           else:
             new_regions=True
         if new_regions:
