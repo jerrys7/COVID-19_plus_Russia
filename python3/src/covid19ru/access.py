@@ -5,6 +5,7 @@ import pandas as pd
 from dateutil import parser
 from pandas import DataFrame, read_csv
 from typing import Dict, List, NamedTuple, Tuple, Optional
+from collections import defaultdict
 
 from .defs import COVID19RU_ROOT
 from .check import filedate, is_format1, is_format2, is_format2_buggy
@@ -16,7 +17,7 @@ def load_format1(filepath:str)->DataFrame:
     'FIPS':None,
     'Admin2':None,
     'Province_State':pd1['Province/State'],
-    'Contry_Region':pd1['Country/Region'],
+    'Country_Region':pd1['Country/Region'],
     'Last_Update':pd1['Last Update'],
     'Lat':None,
     'Long_':None,
@@ -61,26 +62,31 @@ TimeLine=NamedTuple('TimeLine',[('dates',List[datetime]),
                                 ('deaths',List[int]),
                                 ('recovered',List[int])])
 
-def timeline(province_state:str,country_region:Optional[str]=None)->TimeLine:
-  dates=[]
-  confirmed=[]
-  deaths=[]
-  recovered=[]
+def timelines(province_state:Optional[str]=None,country_region:Optional[str]=None)->Dict[Tuple[str,str],TimeLine]:
+  assert province_state is not None or country_region is not None
+  dates=defaultdict(list)
+  confirmed=defaultdict(list)
+  deaths=defaultdict(list)
+  recovered=defaultdict(list)
+  keys=[]
   for d,df in load().items():
-    df=df[df['Province_State']==province_state]
+    if province_state is not None:
+      df=df[df['Province_State']==province_state]
     if country_region is not None:
-      df=[df['Country_Region']==country_region]
+      df=df[df['Country_Region']==country_region]
     if len(df.index)==0:
       continue
-    assert len(df.index)==1
-    dates.append(d)
-    confirmed.append(df['Confirmed'].iloc[0])
-    deaths.append(df['Deaths'].iloc[0])
-    recovered.append(df['Recovered'].iloc[0])
-  return TimeLine(dates,confirmed,deaths,recovered)
-
-
-
-
-
+    df=df.where(pd.notnull(df), None)
+    for i in range(len(df.index)):
+      ps=df['Province_State'].iloc[i]
+      cr=df['Country_Region'].iloc[i]
+      dates[(ps,cr)].append(d)
+      confirmed[(ps,cr)].append(df['Confirmed'].iloc[i])
+      deaths[(ps,cr)].append(df['Deaths'].iloc[i])
+      recovered[(ps,cr)].append(df['Recovered'].iloc[i])
+      keys.append((ps,cr))
+  ret={}
+  for k in keys:
+    ret[k]=TimeLine(dates[k],confirmed[k],deaths[k],recovered[k])
+  return ret
 
