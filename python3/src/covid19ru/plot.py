@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 from math import pow
 from .access import load, timelines
-
+from itertools import chain
+from datetime import datetime
 
 def plot(confirmed_min_threshold=30, show:bool=False)->None:
   plt.figure(figsize=(16, 6))
@@ -9,15 +10,24 @@ def plot(confirmed_min_threshold=30, show:bool=False)->None:
 
   max_tick=0
   min_confirmed=99999999
-  for (ps,cr),tl in timelines(country_region='Russia').items():
-    if ps is None:
+  out={}
+  out.update(timelines(country_region='Russia'))
+  out.update(timelines(country_region='Italy'))
+  ndays_in_russia_after_threshold=(out['Moscow','Russia'].dates[-1]-out['Moscow','Russia'].dates[0]).days-5
+
+  for (ps,cr),tl in out.items():
+    print(ps,cr)
+    if ps is None and cr=='Russia':
       continue # Skip whole Russia which is similar to Moscow
     if tl.confirmed[-1]<10:
       continue
 
-    ticks=[]; tick=0; confirmed=[]
+    ticks=[]; tick=0; confirmed=[]; dstart=None;
     for d,c in zip(tl.dates,tl.confirmed):
       if c<=confirmed_min_threshold:
+        continue
+      dstart=d if dstart is None else dstart
+      if (d-dstart).days>ndays_in_russia_after_threshold:
         continue
       ticks.append(tick)
       confirmed.append(c)
@@ -29,6 +39,7 @@ def plot(confirmed_min_threshold=30, show:bool=False)->None:
     min_confirmed=min(min_confirmed,confirmed[0])
 
     plt.plot(ticks, confirmed, label=f'{ps or cr}')
+
 
   plt.plot(range(max_tick),[min_confirmed*pow(1.05,x) for x in range(max_tick)],
            color='grey', linestyle='--', label='5% groth rate', alpha=0.5)
