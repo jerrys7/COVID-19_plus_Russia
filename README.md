@@ -101,6 +101,10 @@ Visualizations:
 
 ### Log
 
+#### 30.03.2020
+
+* Number of 'recovered' decreased in Sverdlovsk oblast
+
 #### 25.03.2020
 
 * Conflict resolved. `23-22-2020.csv` file seemed to be damaged by the upstream admins.
