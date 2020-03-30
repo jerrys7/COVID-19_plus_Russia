@@ -27,6 +27,9 @@ def is_format1(f:str):
 def is_format2(f:str):
   return filedate(f)>=datetime(2020,3,22)
 
+def is_format2_buggy(f:str):
+  return filedate(f)==datetime(2020,3,22)
+
 def filter_ru(df:DataFrame)->DataFrame:
   return df[(df['Country_Region']=='Russia') & notnull(df['Province_State'])]
 
