@@ -95,7 +95,3 @@ def check_all(root:str=COVID19RU_ROOT)->List[Error]:
         errors.extend(check_file(filepath,cs))
   return errors
 
-
-if __name__ == '__main__':
-  errors=check_all()
-  assert len(errors)==0

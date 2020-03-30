@@ -17,6 +17,7 @@ let
       ipython
       numpy
       pandas
+      matplotlib
 
       pyls-mypy
       pyls
@@ -24,6 +25,7 @@ let
     ]);
 
     shellHook = with pkgs; ''
+      export QT_QPA_PLATFORM_PLUGIN_PATH=`echo ${pkgs.qt5.qtbase.bin}/lib/qt-*/plugins/platforms/`
       if test -f ./env.sh ; then
         . ./env.sh
       fi
