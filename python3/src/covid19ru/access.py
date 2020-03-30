@@ -76,14 +76,15 @@ def timelines(province_state:Optional[str]=None,country_region:Optional[str]=Non
       df=df[df['Country_Region']==country_region]
     if len(df.index)==0:
       continue
-    df=df.where(pd.notnull(df), None)
+    def _fixnan(df, default=None):
+      return df.where(pd.notnull(df), default)
     for i in range(len(df.index)):
-      ps=df['Province_State'].iloc[i]
-      cr=df['Country_Region'].iloc[i]
+      ps=_fixnan(df['Province_State']).iloc[i]
+      cr=_fixnan(df['Country_Region']).iloc[i]
       dates[(ps,cr)].append(d)
-      confirmed[(ps,cr)].append(df['Confirmed'].iloc[i])
-      deaths[(ps,cr)].append(df['Deaths'].iloc[i])
-      recovered[(ps,cr)].append(df['Recovered'].iloc[i])
+      confirmed[(ps,cr)].append(_fixnan(df['Confirmed'],0).astype('int32').iloc[i])
+      deaths[(ps,cr)].append(_fixnan(df['Deaths'],0).astype('int32').iloc[i])
+      recovered[(ps,cr)].append(_fixnan(df['Recovered'],0).astype('int32').iloc[i])
       keys.append((ps,cr))
   ret={}
   for k in keys:
