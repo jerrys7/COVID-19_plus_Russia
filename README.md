@@ -84,8 +84,8 @@ Visualizations:
   - Check less-trivial invariants
 * Python API to access the CSV data. It should handle the CSV format change
   which happened around 23.03.2020
-  - Pandas API
-  - Provide compatibility level for data before 23.03.2020
+  - ~~Pandas API~~ (see [./python3/src/covid19ru/access.py](./python3/src/covid19ru/access.py))
+  - ~~Provide compatibility level for data before 23.03.2020~~
   - ???
 * Semi-automated data loader from Yandex. Ideally, we want to perform the
   following actions:
