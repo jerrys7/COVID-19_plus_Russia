@@ -10,9 +10,13 @@
 * [Upstream issue](https://github.com/CSSEGISandData/COVID-19/issues/1262)
 * [Generic local discussion (if any)](https://github.com/grwlf/COVID-19_plus_Russia/issues/1)
 
-_Disclamer: the author doesn't have relationships with any official or
+_Disclamer: the author doesn't have relationships with any government or
 commercial organisations. The data provided there are collected from unreliable
-sources and may not be accurate. Please use it at your own risk._
+sources and may be not accurate. Use it at your own risk._
+
+_Отказ от ответственности: автор не имеет отношения к государственным или
+коммерческим организациям. Данные, преведенные здесь, собраны из ненадежных
+источников и могут быть неточными. Используйте их на свой страх и риск._
 
 ### Contents
 
@@ -27,7 +31,9 @@ sources and may not be accurate. Please use it at your own risk._
 
 #### Visualization
 
-![](python3/ruscovid.png)
+[English version of the plot](python3/ruscovid.png)
+
+![](python3/ruscovid_ru.png)
 
 #### Data source description
 
