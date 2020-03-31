@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from math import pow
-from .access import load, timelines
+from .access import load, timelines, TimeLine
 from itertools import chain
 from datetime import datetime
 
@@ -10,7 +10,7 @@ def plot(confirmed_min_threshold=30, show:bool=False)->None:
 
   max_tick=0
   min_confirmed=99999999
-  out={}
+  out:Dict[Tuple[str,str],TimeLine]={}
   out.update(timelines(country_region='Russia'))
   out.update(timelines(country_region='Italy'))
   out.update(timelines(country_region='Japan'))
@@ -23,7 +23,7 @@ def plot(confirmed_min_threshold=30, show:bool=False)->None:
     if tl.confirmed[-1]<10:
       continue
 
-    ticks=[]; tick=0; confirmed=[];
+    ticks=[]; tick=0; confirmed=[]
     for d,c in zip(tl.dates,tl.confirmed):
       if c<=confirmed_min_threshold:
         continue
