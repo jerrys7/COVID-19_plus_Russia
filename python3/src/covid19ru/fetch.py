@@ -82,7 +82,7 @@ def fetch_file(filepath:str, dump_folder:str=COVID19RU_PENDING)->PendingData:
 
 
 
-CITIES=[('Moscow','Москва'),
+REGIONS=[('Moscow','Москва'),
         ('Saint Petersburg','Санкт-Петербург'),
         ('Moscow oblast','Московская область'),
         ('Samara oblast','Самарская область'),
@@ -154,6 +154,9 @@ CITIES=[('Moscow','Москва'),
         ("Republic of Mariy El","Республика Марий Эл"),
         ("Republic of Chuvashia","Республика Чувашия"),
         ]
+
+REGIONS_RU_EN={r_ru:r_en for r_en,r_ru in REGIONS}
+REGIONS_EN_RU={r_en:r_ru for r_en,r_ru in REGIONS}
 
 Lat=float
 Lon=float
@@ -240,10 +243,10 @@ def format_csse2(data:PendingData, dump_folder:Optional[str]=COVID19RU_PENDING, 
   res = []
   misses = []
   for c_ru,dat in data.val.items():
-    if (not assert_unknown) and (not c_ru in {ru:en for en,ru in CITIES}):
+    if (not assert_unknown) and (not c_ru in {ru:en for en,ru in REGIONS}):
       misses.append(c_ru)
       continue
-    c_en={ru:en for en,ru in CITIES}[c_ru]
+    c_en={ru:en for en,ru in REGIONS}[c_ru]
 
     update_time = data.utcnow.strftime("%Y-%m-%d %H:%M:%S")
     loc_lat,loc_lon = LOCATION.get(c_en, yandex_unpack_coordinates(dat,LOCATION_DEF))

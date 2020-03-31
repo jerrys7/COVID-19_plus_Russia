@@ -62,7 +62,9 @@ TimeLine=NamedTuple('TimeLine',[('dates',List[datetime]),
                                 ('deaths',List[int]),
                                 ('recovered',List[int])])
 
-def timelines(province_state:Optional[str]=None,country_region:Optional[str]=None)->Dict[Tuple[str,str],TimeLine]:
+def timelines(province_state:Optional[str]=None,
+              country_region:Optional[str]=None,
+              default_loc:Optional[str]=None)->Dict[Tuple[str,str],TimeLine]:
   assert province_state is not None or country_region is not None
   dates=defaultdict(list)
   confirmed=defaultdict(list)
@@ -79,8 +81,8 @@ def timelines(province_state:Optional[str]=None,country_region:Optional[str]=Non
     def _fixnan(df, default=None):
       return df.where(pd.notnull(df), default)
     for i in range(len(df.index)):
-      ps=_fixnan(df['Province_State']).iloc[i]
-      cr=_fixnan(df['Country_Region']).iloc[i]
+      ps=_fixnan(df['Province_State'],default_loc).iloc[i]
+      cr=_fixnan(df['Country_Region'],default_loc).iloc[i]
       dates[(ps,cr)].append(d)
       confirmed[(ps,cr)].append(_fixnan(df['Confirmed'],0).astype('int32').iloc[i])
       deaths[(ps,cr)].append(_fixnan(df['Deaths'],0).astype('int32').iloc[i])
