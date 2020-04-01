@@ -62,10 +62,11 @@ def check_file(filepath:str, cs:CheckerState)->List[Error]:
           if len(p.index)>0:
             prow=p.iloc[0]
             assert row['Confirmed'] >= prow['Confirmed'], \
-                f'Confirmed decreased for {region}'
+                f"Confirmed decreased for {region} from {prow['Confirmed']} to {row['Confirmed']}"
             assert row['Deaths'] >= prow['Deaths'], \
                 f'Resurrected in {region}??'
-            assert row['Recovered'] >= prow['Recovered'], f'Recovered decreased in {region} (oh no!)'
+            assert row['Recovered'] >= prow['Recovered'], \
+                f"Recovered decreased in {region} from {prow['Recovered']} to {row['Recovered']} (oh no!)"
           else:
             new_regions=True
         if new_regions:

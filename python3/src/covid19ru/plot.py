@@ -53,11 +53,10 @@ def plot(confirmed_min_threshold=30, show:bool=False,
       label=ps or cr
 
     alpha=0.6 if cr in ['Italy','Japan'] else 1.0
-    color=None
-          # {'Italy':'darkgrey',
-          #  'Japan':'grey'}.get(cr,
-          #      {'Moscow':'orange'}.get(ps))
-    plt.plot(ticks, confirmed, label=label, alpha=alpha, color=color)
+    color={'Italy':'#d62728',
+           'Japan':'#9467bd'}.get(cr)
+    p=plt.plot(ticks, confirmed, label=label, alpha=alpha, color=color)
+    print(p[0].get_color())
 
   def _growth_rate_label(x):
     if labels_in_russian:
