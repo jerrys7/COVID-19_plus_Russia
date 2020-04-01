@@ -120,8 +120,8 @@ Visualizations:
   Error(file='COVID-19_plus_Russia/csse_covid_19_data/csse_covid_19_daily_reports/03-31-2020.csv',
   text='Confirmed decreased for Republic of Crimea from 20 to 16')
   ```
-  That means that Yandex counters decreas their values. We can't name the
-  reason, probably the were some corrections.
+  That means that Yandex counters decrease their values. We can't name the
+  reason, probably there were some corrections.
 
 #### 30.03.2020
 
