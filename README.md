@@ -121,7 +121,9 @@ Visualizations:
   text='Confirmed decreased for Republic of Crimea from 20 to 16')
   ```
   That means that Yandex counters decrease their values. We can't name the
-  reason, probably there were some corrections.
+  reason, probably there were some corrections. One possible reason - splitting
+  the Crimea into `Crimea` and `Sevastopol`.
+
 
 #### 30.03.2020
 
