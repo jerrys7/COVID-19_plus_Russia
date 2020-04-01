@@ -156,6 +156,8 @@ REGIONS=[('Moscow','Москва'),
         ("Astrahan oblast","Астраханская область"),
         ("Magadan oblast","Магаданская область"),
         ("Sevastopol","Севастополь"),
+        ("Kursk oblast","Курская область"),
+        ("Republic of North Osetia - Alania","Республика Северная Осетия — Алания"),
         ]
 
 REGIONS_RU_EN={r_ru:r_en for r_en,r_ru in REGIONS}
