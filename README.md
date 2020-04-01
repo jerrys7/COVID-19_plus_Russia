@@ -107,13 +107,30 @@ Visualizations:
     * Seems that it is just `Confirmed-Deaths-Recovered`. One have to update the
       data which miss this value.
   - Daily update CSSE with Russian state information
+* Make periodical dumps of rospotrebnadzor cite. Try to track possible source of
+  data inconsistency.
 * Find data on Russian regions for pre- 25.03.2020 period.
 
 ### Log
 
+#### 01.04.2020
+
+* More errors come from checker script, this time on Crimea:
+  ```
+  Error(file='COVID-19_plus_Russia/csse_covid_19_data/csse_covid_19_daily_reports/03-31-2020.csv',
+  text='Confirmed decreased for Republic of Crimea from 20 to 16')
+  ```
+  That means that Yandex counters decreas their values. We can't name the
+  reason, probably the were some corrections.
+
 #### 30.03.2020
 
 * Number of 'recovered' decreased in Sverdlovsk oblast
+* Exact text of an error:
+  ```
+  Error(file='COVID-19_plus_Russia/csse_covid_19_data/csse_covid_19_daily_reports/03-29-2020.csv',
+  text='Recovered decreased in Sverdlov oblast from 3 to 1 (oh no!)'),
+  ```
 
 #### 25.03.2020
 
