@@ -159,6 +159,8 @@ REGIONS=[('Moscow','Москва'),
         ("Kursk oblast","Курская область"),
         ("Republic of North Osetia - Alania","Республика Северная Осетия — Алания"),
         ("Yamalo-Nenetskiy AO","Ямало-Ненецкий автономный округ"),
+        ("Ingushetia republic","Республика Ингушетия"),
+        ("Jewish Autonomous oblast","Еврейская автономная область"),
         ]
 
 REGIONS_RU_EN={r_ru:r_en for r_en,r_ru in REGIONS}
