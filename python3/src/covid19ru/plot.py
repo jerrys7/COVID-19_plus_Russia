@@ -7,6 +7,31 @@ from itertools import chain
 from datetime import datetime
 from collections import OrderedDict
 
+import locale
+locale.setlocale(locale.LC_TIME, "en_US")
+
+def timelines_preprocess():
+  tls=timelines(country_region='Russia', default_loc='')
+
+  def _todict(tl:TimeLine)->dict:
+    return {date:(c,d,r) for date,c,d,r in zip(tl.dates,tl.confirmed,tl.deaths,tl.recovered)}
+
+  tl_m=_todict(tls[('Moscow','Russia')])
+  tl_mo=_todict(tls[('Moscow oblast','Russia')])
+
+  tl=TimeLine([],[],[],[])
+  for d in sorted(list(set(tl_m.keys()).union(set(tl_mo.keys())))):
+    tl.dates.append(d)
+    rm=tl_m.get(d,(0,0,0))
+    rmo=tl_mo.get(d,(0,0,0))
+    tl.confirmed.append(rm[0]+rmo[0])
+    tl.deaths.append(rm[1]+rmo[1])
+    tl.recovered.append(rm[2]+rmo[2])
+  # print(tl)
+  tls[('Moscow+MO','Russia')]=tl
+  del tls[('Moscow','Russia')]
+  del tls[('Moscow oblast','Russia')]
+  return tls
 
 def plot(confirmed_min_threshold=30, show:bool=False,
          save_name:Optional[str]=None, labels_in_russian:bool=False)->None:
@@ -15,11 +40,13 @@ def plot(confirmed_min_threshold=30, show:bool=False,
 
   max_tick=0
   min_confirmed=99999999
+  tls=timelines_preprocess()
   out:Dict[Tuple[str,str],TimeLine]=OrderedDict()
-  out.update({k:v for k,v in sorted(timelines(country_region='Russia', default_loc='').items(), key=lambda i:i[0]) })
+  out.update({k:v for k,v in sorted(tls.items(), key=lambda i:i[0]) })
   out.update(timelines(country_region='Italy', default_loc=''))
   out.update(timelines(country_region='Japan', default_loc=''))
-  ndays_in_russia_after_threshold=(out['Moscow','Russia'].dates[-1]-out['Moscow','Russia'].dates[0]).days
+  lastdate=out[('Moscow+MO','Russia')].dates[-1]
+  ndays_in_russia_after_threshold=(lastdate-out[('Moscow+MO','Russia')].dates[0]).days
 
   for (ps,cr),tl in out.items():
     # print(ps,cr)
@@ -44,7 +71,7 @@ def plot(confirmed_min_threshold=30, show:bool=False,
     min_confirmed=min(min_confirmed,confirmed[0])
 
     if labels_in_russian:
-      label=REGIONS_EN_RU.get(ps)
+      label={'Moscow+MO':'Москва+область'}.get(ps,REGIONS_EN_RU.get(ps))
       if label is None:
         label={'Russia':'Россия',
                'Italy':'Италия',
@@ -56,7 +83,6 @@ def plot(confirmed_min_threshold=30, show:bool=False,
     color={'Italy':'#d62728',
            'Japan':'#9467bd'}.get(cr)
     p=plt.plot(ticks, confirmed, label=label, alpha=alpha, color=color)
-    print(p[0].get_color())
 
   def _growth_rate_label(x):
     if labels_in_russian:
@@ -72,11 +98,11 @@ def plot(confirmed_min_threshold=30, show:bool=False,
            color='grey', linestyle='--', label=_growth_rate_label(85), alpha=0.5)
 
   if labels_in_russian:
-    plt.title("Число подтвержденных случаев COVID19 в регионах России")
+    plt.title(f"Число подтвержденных случаев COVID19 в регионах России на {lastdate.strftime('%d.%m.%Y')}")
     plt.xlabel(f"Количество дней с момента {confirmed_min_threshold}-го подтвержденного случая")
     plt.ylabel("Подтвержденных случаев")
   else:
-    plt.title("Confirmed COVID19 cases in regions of Russia")
+    plt.title(f"Confirmed COVID19 cases in regions of Russia, as of {lastdate.strftime('%d %B %Y')}")
     plt.xlabel(f"Number of days since {confirmed_min_threshold}th confirmed")
     plt.ylabel("Confirmed cases")
 
