@@ -11,7 +11,7 @@
 * [Generic local discussion (if any)](https://github.com/grwlf/COVID-19_plus_Russia/issues/1)
 
 _Disclamer: the author doesn't have relationships with any government or
-commercial organisations. The data provided there are collected from unreliable
+commercial organisations. The data provided here are collected from unreliable
 sources and may be not accurate. Use it at your own risk._
 
 _Отказ от ответственности: автор не имеет отношения к государственным или
