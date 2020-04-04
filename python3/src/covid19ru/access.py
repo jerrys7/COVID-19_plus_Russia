@@ -62,9 +62,12 @@ TimeLine=NamedTuple('TimeLine',[('dates',List[datetime]),
                                 ('deaths',List[int]),
                                 ('recovered',List[int])])
 
+Province_State=str  # City or region name
+Country_Region=str  # Country name
+
 def timelines(province_state:Optional[str]=None,
               country_region:Optional[str]=None,
-              default_loc:Optional[str]=None)->Dict[Tuple[str,str],TimeLine]:
+              default_loc:Optional[str]=None)->Dict[Tuple[Province_State,Country_Region],TimeLine]:
   assert province_state is not None or country_region is not None
   dates=defaultdict(list)
   confirmed=defaultdict(list)
