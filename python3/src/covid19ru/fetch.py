@@ -163,6 +163,7 @@ REGIONS=[('Moscow','Москва'),
         ("Jewish Autonomous oblast","Еврейская автономная область"),
         ("Kamchatskiy kray","Камчатский край"),
         ("Republic of Karelia", "Республика Карелия"),
+        ("Republic of Karachaevo-Cherkessia", "Карачаево-Черкесская Республика"),
         ]
 
 REGIONS_RU_EN={r_ru:r_en for r_en,r_ru in REGIONS}
