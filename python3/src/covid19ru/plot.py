@@ -94,8 +94,8 @@ def plot(confirmed_min_threshold=30, show:bool=False,
            color='grey', linestyle='--', label=_growth_rate_label(5), alpha=0.5)
   plt.plot(range(max_tick),[min_confirmed*pow(1.3,x) for x in range(max_tick)],
            color='grey', linestyle='--', label=_growth_rate_label(30), alpha=0.5)
-  plt.plot(range(max_tick),[min_confirmed*pow(1.85,x) for x in range(max_tick)],
-           color='grey', linestyle='--', label=_growth_rate_label(85), alpha=0.5)
+  # plt.plot(range(max_tick),[min_confirmed*pow(1.85,x) for x in range(max_tick)],
+  #          color='grey', linestyle='--', label=_growth_rate_label(85), alpha=0.5)
 
   if labels_in_russian:
     plt.title(f"Число подтвержденных случаев COVID19 в регионах России на {lastdate.strftime('%d.%m.%Y')}")
@@ -106,9 +106,12 @@ def plot(confirmed_min_threshold=30, show:bool=False,
     plt.xlabel(f"Number of days since {confirmed_min_threshold}th confirmed")
     plt.ylabel("Confirmed cases")
 
+  from matplotlib.font_manager import FontProperties
+  fontP = FontProperties()
+  fontP.set_size('small')
 
   plt.grid(True)
-  plt.legend(loc='upper left')
+  plt.legend(loc='upper left', prop=fontP)
 
   # handles, labels = plt.gca().get_legend_handles_labels()
   # # sort both labels and handles by labels
