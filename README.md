@@ -113,6 +113,15 @@ Visualizations:
 
 ### Log
 
+#### 08.04.2020
+
+* More breaking changes from the upstream. The following daily data files have
+  unmatching data foramt and extra symbols in the line ends:
+  - `03-21-2020.csv`
+  - `03-29-2020.csv`
+  - `03-30-2020.csv`
+  - `04-06-2020.csv`
+
 #### 01.04.2020
 
 * More errors come from checker script, this time on Crimea:
