@@ -33,7 +33,7 @@ def timelines_preprocess():
   del tls[('Moscow oblast','Russia')]
   return tls
 
-def plot(confirmed_min_threshold=30, show:bool=False,
+def plot(confirmed_min_threshold=50, show:bool=False,
          save_name:Optional[str]=None, labels_in_russian:bool=False)->None:
   plt.figure(figsize=(16, 6))
   plt.yscale('log')
@@ -111,7 +111,7 @@ def plot(confirmed_min_threshold=30, show:bool=False,
   fontP.set_size('small')
 
   plt.grid(True)
-  plt.legend(loc='upper left', prop=fontP)
+  plt.legend(loc='upper right', prop=fontP)
 
   # handles, labels = plt.gca().get_legend_handles_labels()
   # # sort both labels and handles by labels
