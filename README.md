@@ -121,6 +121,7 @@ Visualizations:
   - `03-29-2020.csv`
   - `03-30-2020.csv`
   - `04-06-2020.csv`
+* Updated issue <https://github.com/CSSEGISandData/COVID-19/issues/1523>
 
 #### 01.04.2020
 
