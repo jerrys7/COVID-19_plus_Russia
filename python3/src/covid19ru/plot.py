@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from math import pow
 from typing import Dict, Optional, Tuple
-from .access import load, timelines, TimeLine
+from .access import load, timelines, TimeLine, Province_State, Country_Region
 from .fetch import REGIONS_EN_RU
 from itertools import chain
 from datetime import datetime
@@ -10,7 +10,8 @@ from collections import OrderedDict
 import locale
 locale.setlocale(locale.LC_TIME, "en_US")
 
-def timelines_preprocess():
+def timelines_preprocess()->Dict[Tuple[Province_State,Country_Region],TimeLine]:
+  """ Merge Moscow and Moscow oblast """
   tls=timelines(country_region='Russia', default_loc='')
 
   def _todict(tl:TimeLine)->dict:
@@ -42,7 +43,7 @@ def plot(confirmed_min_threshold=50, show:bool=False,
   min_confirmed=99999999
   tls=timelines_preprocess()
   out:Dict[Tuple[str,str],TimeLine]=OrderedDict()
-  out.update({k:v for k,v in sorted(tls.items(), key=lambda i:i[0]) })
+  out.update({k:v for k,v in sorted(tls.items(), key=lambda i:-i[1].confirmed[-1]) })
   out.update(timelines(country_region='Italy', default_loc=''))
   out.update(timelines(country_region='Japan', default_loc=''))
   lastdate=out[('Moscow+MO','Russia')].dates[-1]
