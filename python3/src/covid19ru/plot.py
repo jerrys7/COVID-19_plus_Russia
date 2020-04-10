@@ -89,7 +89,7 @@ def plot(confirmed_min_threshold=50, show:bool=False,
     if labels_in_russian:
       return f'Прирост {x}%'
     else:
-      return f'{x}% groth rate'
+      return f'{x}% growth rate'
 
   plt.plot(range(max_tick),[min_confirmed*pow(1.05,x) for x in range(max_tick)],
            color='grey', linestyle='--', label=_growth_rate_label(5), alpha=0.5)
