@@ -57,8 +57,8 @@ def fetch_yandex(dump_folder:Optional[str]=COVID19RU_PENDING)->PendingData:
   #     'deaths': int(items[3]['value'])
   # }
   # print(attrs)
-  m = re.search(r', (.+?) \(', data['covidData']['subtitle'])
-  state = m[1]
+  # m = re.search(r', (.+?) \(', data['covidData']['subtitle'])
+  # state = m[1]
   data = PendingData(datetime.utcnow(), attrs)
   # print(state)
   if dump_folder is not None:
@@ -164,6 +164,7 @@ REGIONS=[('Moscow','Москва'),
         ("Kamchatskiy kray","Камчатский край"),
         ("Republic of Karelia", "Республика Карелия"),
         ("Republic of Karachaevo-Cherkessia", "Карачаево-Черкесская Республика"),
+        ("Republic of Tyva", "Республика Тыва"),
         ]
 
 REGIONS_RU_EN={r_ru:r_en for r_en,r_ru in REGIONS}
