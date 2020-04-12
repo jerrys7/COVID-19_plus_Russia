@@ -83,7 +83,10 @@ def plot(confirmed_min_threshold=50, show:bool=False,
     alpha=0.6 if cr in ['Italy','Japan'] else 1.0
     color={'Italy':'#d62728',
            'Japan':'#9467bd'}.get(cr)
-    p=plt.plot(ticks, confirmed, label=label, alpha=alpha, color=color)
+    ls={'Italy':':',
+        'Japan':':',
+       }.get(cr)
+    p=plt.plot(ticks, confirmed, label=label, alpha=alpha, color=color, linestyle=ls)
 
   def _growth_rate_label(x):
     if labels_in_russian:
@@ -109,10 +112,10 @@ def plot(confirmed_min_threshold=50, show:bool=False,
 
   from matplotlib.font_manager import FontProperties
   fontP = FontProperties()
-  fontP.set_size('small')
+  fontP.set_size('x-small')
 
   plt.grid(True)
-  plt.legend(loc='upper right', prop=fontP)
+  plt.legend(loc='upper right', prop=fontP, ncol=2)
 
   # handles, labels = plt.gca().get_legend_handles_labels()
   # # sort both labels and handles by labels
