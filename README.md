@@ -113,6 +113,11 @@ Visualizations:
 
 ### Log
 
+#### 12.04.2020
+
+* No updates on Komi republic (3rd place among Russian regions) since
+  10.04.2020. Checked both Yandex and Rospotrebnadzor site.
+
 #### 08.04.2020
 
 * More breaking changes from the upstream. The following daily data files have
