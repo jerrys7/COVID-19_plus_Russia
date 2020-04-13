@@ -80,7 +80,7 @@ March, 25 we follow the below procedure:
         5. Update RU timeline by calling `ru_timeline_dump()` of
            [access.py](./python3/src/covid19ru/access.py).
         6. Run the [checker script](./python3/src/covid19ru/check.py).
-        7. Update plots by running [plot script](./python3/src/plot.py).
+        7. Update plots by running [plot script](./python3/plot.py).
         8. Commit the changes to this repository, forcebly push (due to rebase)
            here.
 
