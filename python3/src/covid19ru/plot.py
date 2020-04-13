@@ -34,8 +34,11 @@ def timelines_preprocess()->Dict[Tuple[Province_State,Country_Region],TimeLine]:
   del tls[('Moscow oblast','Russia')]
   return tls
 
-def plot(confirmed_min_threshold=50, show:bool=False,
-         save_name:Optional[str]=None, labels_in_russian:bool=False)->None:
+def plot(confirmed_min_threshold=100,
+         show:bool=False,
+         save_name:Optional[str]=None,
+         labels_in_russian:bool=False,
+         moscow_italy_right_margin:int=5)->None:
   plt.figure(figsize=(16, 6))
   plt.yscale('log')
 
@@ -47,7 +50,13 @@ def plot(confirmed_min_threshold=50, show:bool=False,
   out.update(timelines(country_region='Italy', default_loc=''))
   out.update(timelines(country_region='Japan', default_loc=''))
   lastdate=out[('Moscow+MO','Russia')].dates[-1]
-  ndays_in_russia_after_threshold=(lastdate-out[('Moscow+MO','Russia')].dates[0]).days
+
+  # Calculate number of days to show
+  ndays_in_russia_after_threshold=moscow_italy_right_margin
+  for c in out[('Moscow+MO','Russia')].confirmed:
+    if c<=confirmed_min_threshold:
+      continue
+    ndays_in_russia_after_threshold+=1
 
   for (ps,cr),tl in out.items():
     # print(ps,cr)
@@ -115,7 +124,7 @@ def plot(confirmed_min_threshold=50, show:bool=False,
   fontP.set_size('x-small')
 
   plt.grid(True)
-  plt.legend(loc='upper right', prop=fontP, ncol=2)
+  plt.legend(loc='upper left', prop=fontP, ncol=2)
 
   # handles, labels = plt.gca().get_legend_handles_labels()
   # # sort both labels and handles by labels
