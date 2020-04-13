@@ -119,7 +119,7 @@ Visualizations:
 
 * Still no updates on Komi republic
 * Added code to dump RU timeline. The up-to-date RU timeline file is available
-  <./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_RU.csv>
+  [./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_RU.csv](./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_RU.csv)
 
 #### 12.04.2020
 
