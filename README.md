@@ -94,27 +94,27 @@ Visualizations:
 
 ### Roadmap
 
-* Python code to check the correctness of CSV files
+* ~~Python code to check the correctness of CSV files~~
   - ~~Python stub checking the validity of basic CSV structure~~ (see
     [./python3/src/covid19ru/check.py](./python3/src/covid19ru/check.py) )
-  - Check less-trivial invariants
-* Python API to access the CSV data. It should handle the CSV format change
-  which happened around 23.03.2020
+  - ~~Check less-trivial invariants~~
+* ~~Python API to access the CSV data. It should handle the CSV format change
+  which happened around 23.03.2020~~
   - ~~Pandas API~~ (see [./python3/src/covid19ru/access.py](./python3/src/covid19ru/access.py))
   - ~~Provide compatibility level for data before 23.03.2020~~
-  - ???
-* Semi-automated data loader from Yandex. Ideally, we want to perform the
-  following actions:
+* ~~Semi-automated data loader from Yandex. Ideally, we want to perform the
+  following actions~~:
   - ~~Collect `Confirmed/Death/Recovered` info for each Russian city~~ (starting
     from `03-25-2020.csv`)
   - ~~Save this information in a temporary file to handle update gap~~
   - ~~Set correct value of Longitude/Latitude for Russian regions~~
-  - Figure out what does 'Active' field mean and how to get it.
+  - ~~Figure out what does 'Active' field mean and how to get it.~~
     * Seems that it is just `Confirmed-Deaths-Recovered`. One have to update the
       data which miss this value.
-  - Daily update CSSE with Russian state information
-* Make periodical dumps of rospotrebnadzor cite. Try to track possible source of
-  data inconsistency.
+* ~~Make periodical dumps of rospotrebnadzor cite. Try to track possible source of
+  data inconsistency~~.
+* ~~Auto-generate timeseries~~
+* Daily update CSSE with Russian state information
 * Find data on Russian regions for pre- 25.03.2020 period.
 
 ### Log
