@@ -26,10 +26,10 @@ _Отказ от ответственности: автор не имеет от
 * [csse_covid_19_data/csse_covid_19_time_series](./csse_covid_19_data/csse_covid_19_time_series)
   folder contains additional auto-generated timeseries on Russian regions.
 * [python3](./python3) folder contains Python development tools:
-  - [covid19ru/check.py](covid19ru/check.py) module for checking certain invariants
-  - [covid19ru/fetch.py](covid19ru/fetch.py) Yandex data fetcher
-  - [covid19ru/access.py](covid19ru/access.py) Data accessor API
-  - [covid19ru/plot.py](covid19ru/plot.py) Matplotlib plotting
+  - [covid19ru.check](python3/src/covid19ru/check.py) module for checking certain invariants
+  - [covid19ru.fetch](python3/src/covid19ru/fetch.py) Yandex data fetcher
+  - [covid19ru.access](python3/src/covid19ru/access.py) Data accessor API
+  - [covid19ru.plot](python3/src/covid19ru/plot.py) Matplotlib plotting
 
 ### Data
 
