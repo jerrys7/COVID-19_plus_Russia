@@ -20,12 +20,16 @@ _Отказ от ответственности: автор не имеет от
 
 ### Contents
 
-* `csse_covid_19_data` contains CSV files which were released by CSSE and later
-  amended by us. Files released after March 25 contain additional information on
-  55 regions of Russia.
-* [python3](./python3) folder contains stub and development tools:
-  - `covid19ru.check` module for checking certain invariants
-  - `covid19ru.fetch` Yandex data fetcher
+* [csse_covid_19_data/csse_covid_19_daily_reports](./csse_covid_19_data/csse_covid_19_daily_reports)
+  contains CSV files which were released by CSSE and later amended by us. Files
+  released after March 25 were updates with additional information on Russian regions.
+* [csse_covid_19_data/csse_covid_19_time_series](./csse_covid_19_data/csse_covid_19_time_series)
+  folder contains additional auto-generated timeseries on Russian regions.
+* [python3](./python3) folder contains Python development tools:
+  - [covid19ru/check.py](covid19ru/check.py) module for checking certain invariants
+  - [covid19ru/fetch.py](covid19ru/fetch.py) Yandex data fetcher
+  - [covid19ru/access.py](covid19ru/access.py) Data accessor API
+  - [covid19ru/plot.py](covid19ru/plot.py) Matplotlib plotting
 
 ### Data
 
@@ -119,7 +123,8 @@ Visualizations:
 
 * Still no updates on Komi republic
 * Added code to dump RU timeline. The up-to-date RU timeline file is available
-  [./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_RU.csv](./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_RU.csv)
+  [csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_RU.csv](./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_RU.csv)
+* Also added deaths timeline [csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_RU.csv](./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_RU.csv)
 
 #### 12.04.2020
 
