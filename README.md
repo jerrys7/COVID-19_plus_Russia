@@ -77,10 +77,12 @@ March, 25 we follow the below procedure:
            closest UTC timestamp.
         3. Update world information file by inserting russian details manually.
         4. Review the format compatibility (CSV fields order, date format, etc.).
-        5. Run the [checker script](./python3/src/covid19ru/check.py).
-        6. Update RU timeline by calling `ru_timeline_dump()` of
+        5. Update RU timeline by calling `ru_timeline_dump()` of
            [access.py](./python3/src/covid19ru/access.py).
-        7. Commit the changes to this repository.
+        6. Run the [checker script](./python3/src/covid19ru/check.py).
+        7. Update plots by running [plot script](./python3/src/plot.py).
+        8. Commit the changes to this repository, forcebly push (due to rebase)
+           here.
 
 #### Related repos
 
