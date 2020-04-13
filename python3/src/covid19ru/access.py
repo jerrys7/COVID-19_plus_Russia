@@ -125,12 +125,13 @@ def ru_timeline_get(ds, d:datetime, region:str, field:str='Confirmed', default:A
   df=df[df['Province_State']==region]
   if len(df.index)==0:
     return default
-  if not field in df:
+  if field not in df:
     return default
   df=df.where(pd.notnull(df), default)
   return df[field].iloc[0]
 
-def ru_timeline_dump(filename:str=join(COVID19RU_TSROOT,'time_series_covid19_confirmed_RU.csv'))->None:
+def ru_timeline_dump_(filename:str=join(COVID19RU_TSROOT,'time_series_covid19_confirmed_RU.csv'),
+                      report_field:str='Confirmed')->None:
   ds=load(country_region='Russia')
   maxdate=max(ds.keys())
   headers="UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined_Key".split(',')
@@ -142,8 +143,11 @@ def ru_timeline_dump(filename:str=join(COVID19RU_TSROOT,'time_series_covid19_con
       for h in headers:
         line.append(str(ru_timeline_get(ds,maxdate,r,h,'')))
       for d in dates:
-        line.append(str(ru_timeline_get(ds,d,r,'Confirmed',0)))
+        line.append(str(ru_timeline_get(ds,d,r,report_field,0)))
 
-      line=[(f"'{i}'" if isinstance(i,str) and ',' in i else i) for i in line]
+      line=[(f"\"{i}\"" if isinstance(i,str) and ',' in i else i) for i in line]
       f.write(','.join(line)); f.write('\n')
 
+def ru_timeline_dump(tsroot:str=COVID19RU_TSROOT)->None:
+  ru_timeline_dump_(join(tsroot, 'time_series_covid19_confirmed_RU.csv'),'Confirmed')
+  ru_timeline_dump_(join(tsroot, 'time_series_covid19_deaths_RU.csv'),'Deaths')

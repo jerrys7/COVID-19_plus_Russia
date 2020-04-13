@@ -5,7 +5,7 @@ from os.path import (
     basename, join, isfile, isdir, islink, relpath, abspath, dirname, split,
     getsize, splitext )
 
-from .defs import COVID19RU_ROOT
+from .defs import COVID19RU_ROOT, COVID19RU_TSROOT
 from pandas import DataFrame, read_csv, notnull
 from datetime import datetime
 from typing import ( Any, List, Dict, Tuple, NamedTuple, Optional )
@@ -86,7 +86,7 @@ def check_file(filepath:str, cs:CheckerState)->List[Error]:
     print('.....ERROR')
     return [Error(filepath,str(e))]
 
-def check_all(root:str=COVID19RU_ROOT)->List[Error]:
+def check_all(root:str=COVID19RU_ROOT, tsroot:str=COVID19RU_TSROOT)->List[Error]:
   cs=CheckerState()
   errors=[]
   for root, dirs, filenames in walk(abspath(root), topdown=True):
@@ -94,5 +94,6 @@ def check_all(root:str=COVID19RU_ROOT)->List[Error]:
       if filename.endswith('csv'):
         filepath=abspath(join(root, filename))
         errors.extend(check_file(filepath,cs))
+  read_csv(join(tsroot,'time_series_covid19_confirmed_RU.csv'))
   return errors
 
