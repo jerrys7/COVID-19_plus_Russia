@@ -74,7 +74,9 @@ March, 25 we follow the below procedure:
         3. Update world information file by inserting russian details manually.
         4. Review the format compatibility (CSV fields order, date format, etc.).
         5. Run the [checker script](./python3/src/covid19ru/check.py).
-        6. Commit the changes to this repository.
+        6. Update RU timeline by calling `ru_timeline_dump()` of
+           [access.py](./python3/src/covid19ru/access.py).
+        7. Commit the changes to this repository.
 
 #### Related repos
 
@@ -112,6 +114,12 @@ Visualizations:
 * Find data on Russian regions for pre- 25.03.2020 period.
 
 ### Log
+
+#### 13.04.2020
+
+* Still no updates on Komi republic
+* Added code to dump RU timeline. The up-to-date RU timeline file is available
+  <./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_RU.csv>
 
 #### 12.04.2020
 
