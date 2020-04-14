@@ -121,6 +121,13 @@ Visualizations:
 
 ### Log
 
+#### 14.04.2020
+
+* Got an update on Komi republic.
+* Decrease of confirmed cases in Amursk oblast is detected. The number falled
+  from 17 to 6. Local news reported about 17 confirmed cases originally:
+  <https://vostok.today/33443-koronavirus-vs-prichiny-smertnosti-v-amurskoj-oblasti-bolshe-shansov-umeret-v-dtp-ili-ot-infarkta.html>
+
 #### 13.04.2020
 
 * Still no updates on Komi republic
