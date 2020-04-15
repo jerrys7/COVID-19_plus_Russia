@@ -92,6 +92,7 @@ March, 25 we follow the below procedure:
 
 Visualizations:
 
+* https://dash-coronavirus-2020.herokuapp.com
 * https://github.com/AaronWard/covid-19-analysis
 
 ### Roadmap
