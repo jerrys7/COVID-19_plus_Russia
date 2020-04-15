@@ -165,6 +165,8 @@ REGIONS=[('Moscow','Москва'),
         ("Republic of Karelia", "Республика Карелия"),
         ("Republic of Karachaevo-Cherkessia", "Карачаево-Черкесская Республика"),
         ("Republic of Tyva", "Республика Тыва"),
+        ("Nenetskiy autonomous oblast", "Ненецкий автономный округ"),
+        ("Chukotskiy autonomous oblast", "Чукотский автономный округ"),
         ]
 
 REGIONS_RU_EN={r_ru:r_en for r_en,r_ru in REGIONS}
@@ -285,7 +287,12 @@ from time import sleep
 
 def monitor()->None:
   while True:
-    format_csse2(fetch_yandex(), assert_unknown=False)
+    try:
+      format_csse2(fetch_yandex(), assert_unknown=False)
+    except KeyboardInterrupt:
+      raise
+    except Exception as e:
+      print('Exception', e, 'ignoring')
     for i in range(60):
       print(f'{60-i}..',end='',flush=True)
       sleep(60)
