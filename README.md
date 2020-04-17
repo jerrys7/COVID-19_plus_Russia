@@ -42,7 +42,7 @@ _Отказ от ответственности: автор не имеет от
 [English version of the plot](python3/ruscovid.png)
 
 
-**Regions at 11-21 places**
+**Regions at places 11-21**
 
 ![](python3/ruscovid_ru_10_20.png)
 
