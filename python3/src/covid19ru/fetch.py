@@ -167,6 +167,7 @@ REGIONS=[('Moscow','Москва'),
         ("Republic of Tyva", "Республика Тыва"),
         ("Nenetskiy autonomous oblast", "Ненецкий автономный округ"),
         ("Chukotskiy autonomous oblast", "Чукотский автономный округ"),
+        ("Altay republic", "Республика Алтай"),
         ]
 
 REGIONS_RU_EN={r_ru:r_en for r_en,r_ru in REGIONS}
