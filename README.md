@@ -35,9 +35,18 @@ _Отказ от ответственности: автор не имеет от
 
 #### Visualization
 
-[English version of the plot](python3/ruscovid.png)
+**Regions in Top-10**
 
 ![](python3/ruscovid_ru.png)
+
+[English version of the plot](python3/ruscovid.png)
+
+
+**Regions at 11-21 places**
+
+![](python3/ruscovid_ru_10_20.png)
+
+[English version of the plot](python3/ruscovid_10_20.png)
 
 #### Data source description
 
@@ -121,6 +130,10 @@ Visualizations:
 * Find data on Russian regions for pre- 25.03.2020 period.
 
 ### Log
+
+#### 17.04.2020
+
+* Split the plot into `top10` and `10-20` plots for readability.
 
 #### 14.04.2020
 
