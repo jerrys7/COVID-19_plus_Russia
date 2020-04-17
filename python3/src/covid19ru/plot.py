@@ -10,15 +10,13 @@ from collections import OrderedDict
 import locale
 locale.setlocale(locale.LC_TIME, "en_US")
 
-def timelines_preprocess()->Dict[Tuple[Province_State,Country_Region],TimeLine]:
-  """ Merge Moscow and Moscow oblast """
-  tls=timelines(country_region='Russia', default_loc='')
 
+def timelines_merge(tls, key1, key2, key_out):
   def _todict(tl:TimeLine)->dict:
     return {date:(c,d,r) for date,c,d,r in zip(tl.dates,tl.confirmed,tl.deaths,tl.recovered)}
 
-  tl_m=_todict(tls[('Moscow','Russia')])
-  tl_mo=_todict(tls[('Moscow oblast','Russia')])
+  tl_m=_todict(tls[key1])
+  tl_mo=_todict(tls[key2])
 
   tl=TimeLine([],[],[],[])
   for d in sorted(list(set(tl_m.keys()).union(set(tl_mo.keys())))):
@@ -29,31 +27,45 @@ def timelines_preprocess()->Dict[Tuple[Province_State,Country_Region],TimeLine]:
     tl.deaths.append(rm[1]+rmo[1])
     tl.recovered.append(rm[2]+rmo[2])
   # print(tl)
-  tls[('Moscow+MO','Russia')]=tl
-  del tls[('Moscow','Russia')]
-  del tls[('Moscow oblast','Russia')]
+  tls[key_out]=tl
+  del tls[key1]
+  del tls[key2]
+  return tls
+
+def timelines_preprocess()->Dict[Tuple[Province_State,Country_Region],TimeLine]:
+  """ Merge Moscow and Moscow oblast """
+  tls=timelines(country_region='Russia', default_loc='')
+  timelines_merge(tls, ('Moscow','Russia'), ('Moscow oblast','Russia'), ('Moscow+MO','Russia'))
+  timelines_merge(tls, ('Saint Petersburg','Russia'), ('Leningradskaya oblast','Russia'), ('SPb+LO','Russia'))
+  del tls[('','Russia')]
   return tls
 
 def plot(confirmed_min_threshold=100,
          show:bool=False,
          save_name:Optional[str]=None,
          labels_in_russian:bool=False,
-         moscow_italy_right_margin:int=5)->None:
+         moscow_italy_right_margin:int=5,
+         rng:Tuple[Optional[int],Optional[int]]=(None,None))->None:
   plt.figure(figsize=(16, 6))
   plt.yscale('log')
 
   max_tick=0
   min_confirmed=99999999
   tls=timelines_preprocess()
+  tls_list=sorted(tls.items(), key=lambda i:-i[1].confirmed[-1])
+  tls_list=tls_list[rng[0]:rng[1]]
+  print([x[0] for x in tls_list])
   out:Dict[Tuple[str,str],TimeLine]=OrderedDict()
-  out.update({k:v for k,v in sorted(tls.items(), key=lambda i:-i[1].confirmed[-1]) })
-  out.update(timelines(country_region='Italy', default_loc=''))
-  out.update(timelines(country_region='Japan', default_loc=''))
-  lastdate=out[('Moscow+MO','Russia')].dates[-1]
+  out.update({k:v for k,v in tls_list})
+  out[('', 'Italy (ref)')]=list(timelines(country_region='Italy', default_loc='').values())[0]
+  out[('', 'Japan (ref)')]=list(timelines(country_region='Japan', default_loc='').values())[0]
+  if ('Moscow+MO','Russia') not in out:
+    out.update({('Moscow+MO (ref)','Russia'):tls[('Moscow+MO','Russia')]})
+  lastdate=out[tls_list[0][0]].dates[-1]
 
   # Calculate number of days to show
   ndays_in_russia_after_threshold=moscow_italy_right_margin
-  for c in out[('Moscow+MO','Russia')].confirmed:
+  for c in out[tls_list[0][0]].confirmed:
     if c<=confirmed_min_threshold:
       continue
     ndays_in_russia_after_threshold+=1
@@ -81,20 +93,24 @@ def plot(confirmed_min_threshold=100,
     min_confirmed=min(min_confirmed,confirmed[0])
 
     if labels_in_russian:
-      label={'Moscow+MO':'Москва+область'}.get(ps,REGIONS_EN_RU.get(ps))
+      label={'Moscow+MO':'Москва+область',
+             'Moscow+MO (ref)':'Москва+область (справ.)',
+             'SPb+LO':'CПб+область'}.get(ps,REGIONS_EN_RU.get(ps))
       if label is None:
         label={'Russia':'Россия',
-               'Italy':'Италия',
-               'Japan':'Япония'}.get(cr,cr)
+               'Italy (ref)':'Италия (справ.)',
+               'Japan (ref)':'Япония (справ.)'}.get(cr,cr)
     else:
       label=ps or cr
+    label+=f" ({tl.confirmed[-1]})"
 
-    alpha=0.6 if cr in ['Italy','Japan'] else 1.0
-    color={'Italy':'#d62728',
-           'Japan':'#9467bd'}.get(cr)
-    ls={'Italy':':',
-        'Japan':':',
-       }.get(cr)
+    alpha=0.6 if cr in ['Italy (ref)','Japan (ref)'] else 1.0
+    color={'Italy (ref)':'#d62728',
+           'Japan (ref)':'#9467bd'}.get(cr)
+    ls={'Moscow+MO (ref)':':'}.get(ps,
+          {'Italy (ref)':':',
+           'Japan (ref)':':',
+          }.get(cr))
     p=plt.plot(ticks, confirmed, label=label, alpha=alpha, color=color, linestyle=ls)
 
   def _growth_rate_label(x):
