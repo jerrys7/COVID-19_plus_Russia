@@ -45,7 +45,8 @@ def plot(confirmed_min_threshold=100,
          save_name:Optional[str]=None,
          labels_in_russian:bool=False,
          moscow_italy_right_margin:int=5,
-         rng:Tuple[Optional[int],Optional[int]]=(None,None))->None:
+         rng:Tuple[Optional[int],Optional[int]]=(None,None),
+         title_suffix:str='')->None:
   plt.figure(figsize=(16, 6))
   plt.yscale('log')
 
@@ -127,11 +128,11 @@ def plot(confirmed_min_threshold=100,
   #          color='grey', linestyle='--', label=_growth_rate_label(85), alpha=0.5)
 
   if labels_in_russian:
-    plt.title(f"Число подтвержденных случаев COVID19 в регионах России на {lastdate.strftime('%d.%m.%Y')}")
+    plt.title(f"Число подтвержденных случаев COVID19 в регионах России на {lastdate.strftime('%d.%m.%Y')}{title_suffix}")
     plt.xlabel(f"Количество дней с момента {confirmed_min_threshold}-го подтвержденного случая")
     plt.ylabel("Подтвержденных случаев")
   else:
-    plt.title(f"Confirmed COVID19 cases in regions of Russia, as of {lastdate.strftime('%d %B %Y')}")
+    plt.title(f"Confirmed COVID19 cases in regions of Russia, as of {lastdate.strftime('%d %B %Y')}{title_suffix}")
     plt.xlabel(f"Number of days since {confirmed_min_threshold}th confirmed")
     plt.ylabel("Confirmed cases")
 
