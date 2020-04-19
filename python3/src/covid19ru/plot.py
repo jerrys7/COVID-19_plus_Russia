@@ -32,9 +32,8 @@ def timelines_merge(tls, key1, key2, key_out):
   del tls[key2]
   return tls
 
-def timelines_preprocess()->Dict[Tuple[Province_State,Country_Region],TimeLine]:
+def timelines_preprocess(tls)->Dict[Tuple[Province_State,Country_Region],TimeLine]:
   """ Merge Moscow and Moscow oblast """
-  tls=timelines(country_region='Russia', default_loc='')
   timelines_merge(tls, ('Moscow','Russia'), ('Moscow oblast','Russia'), ('Moscow+MO','Russia'))
   timelines_merge(tls, ('Saint Petersburg','Russia'), ('Leningradskaya oblast','Russia'), ('SPb+LO','Russia'))
   del tls[('','Russia')]
@@ -52,7 +51,8 @@ def plot(confirmed_min_threshold=100,
 
   max_tick=0
   min_confirmed=99999999
-  tls=timelines_preprocess()
+  tls=timelines_preprocess(timelines(country_region='Russia', default_loc=''))
+  # tls=timelines(country_region='US', default_loc='')
   tls_list=sorted(tls.items(), key=lambda i:-i[1].confirmed[-1])
   tls_list=tls_list[rng[0]:rng[1]]
   print([x[0] for x in tls_list])
@@ -60,7 +60,7 @@ def plot(confirmed_min_threshold=100,
   out.update({k:v for k,v in tls_list})
   out[('', 'Italy (ref)')]=list(timelines(country_region='Italy', default_loc='').values())[0]
   out[('', 'Japan (ref)')]=list(timelines(country_region='Japan', default_loc='').values())[0]
-  if ('Moscow+MO','Russia') not in out:
+  if ('Moscow+MO','Russia') not in out and ('Moscow+MO','Russia') in tls:
     out.update({('Moscow+MO (ref)','Russia'):tls[('Moscow+MO','Russia')]})
   lastdate=out[tls_list[0][0]].dates[-1]
 
