@@ -84,7 +84,7 @@ def ma7(l:List[int])->List[float]:
   res=[]
   ma=float(0.0)
   for i in range(len(l)):
-    ma=ma*(6.0/7.0) + l[i]*(1.0/7.0)
+    ma=ma + (l[i] - (l[i-7] if i>=7 else 0))*(1.0/7.0)
     res.append(ma)
   assert len(l)==len(res)
   return res
