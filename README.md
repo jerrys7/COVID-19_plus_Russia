@@ -35,14 +35,21 @@ _Отказ от ответственности: автор не имеет от
 
 #### Visualization
 
-**Regions in Top-10**
+**Daily cases in Russian regions, Top-10**
+
+![](python3/ruscovid_ru_ma.png)
+
+[English version of the plot](python3/ruscovid_ma.png)
+
+
+**Confirmed cases in Russian regions, Top-10**
 
 ![](python3/ruscovid_ru.png)
 
 [English version of the plot](python3/ruscovid.png)
 
 
-**Regions at places 11-21**
+**Confirmed cases in Russian regions, places 11-21**
 
 ![](python3/ruscovid_ru_10_20.png)
 
