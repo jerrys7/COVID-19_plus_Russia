@@ -61,7 +61,7 @@ def plot_sliding(labels_in_russian:bool=True, **kwargs):
       metric_fn=lambda tl:tl.daily_cases_ma7,
       title="Скользящее среднее суточного числа заражений COVID19 в регионах России на {lastdate} за семь дней{title_suffix}",
       xlabel="Количество дней с момента превышения значения {min_threshold} заражений в сутки",
-      ylabel="Среднее число заражений за 7 дней",
+      ylabel="Суточное число заражений, среднее за 7 дней",
       **kwargs)
   else:
     plot_(
