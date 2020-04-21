@@ -69,7 +69,30 @@ def load(root:str=COVID19RU_ROOT,
 TimeLine=NamedTuple('TimeLine',[('dates',List[datetime]),
                                 ('confirmed',List[int]),
                                 ('deaths',List[int]),
-                                ('recovered',List[int])])
+                                ('recovered',List[int]),
+                                ('daily_cases',List[int]),
+                                ('daily_cases_ma7',List[float])])
+
+def daily_cases(l:List[int])->List[int]:
+  res=[]
+  for i in range(len(l)):
+    res.append(l[i]-l[i-1] if i>0 else 0)
+  assert len(l)==len(res)
+  return res
+
+def ma7(l:List[int])->List[float]:
+  res=[]
+  ma=float(0.0)
+  for i in range(len(l)):
+    ma=ma*(6.0/7.0) + l[i]*(1.0/7.0)
+    res.append(ma)
+  assert len(l)==len(res)
+  return res
+
+def mktimeline(dates,confirmed,deaths,recovered)->TimeLine:
+  d=daily_cases(confirmed)
+  m=ma7(d)
+  return TimeLine(dates,confirmed,deaths,recovered,d,m)
 
 Province_State=str  # City or region name
 Country_Region=str  # Country name
@@ -101,8 +124,9 @@ def timelines(province_state:Optional[str]=None,
       recovered[(ps,cr)].append(_fixnan(df['Recovered'],0).astype('int32').iloc[i])
       keys.append((ps,cr))
   ret={}
+
   for k in keys:
-    ret[k]=TimeLine(dates[k],confirmed[k],deaths[k],recovered[k])
+    ret[k]=mktimeline(dates[k],confirmed[k],deaths[k],recovered[k])
   return ret
 
 def ru_timeline_regions(ds)->List[str]:
