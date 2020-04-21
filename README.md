@@ -40,7 +40,7 @@ _Отказ от ответственности: автор не имеет от
   - [covid19ru.access](python3/src/covid19ru/access.py) Data accessor API
   - [covid19ru.plot](python3/src/covid19ru/plot.py) Matplotlib plotting
 
-#### Visualization
+### Visualization
 
 **Daily cases in Russian regions, Top-10**
 
