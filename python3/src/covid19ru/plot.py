@@ -46,6 +46,8 @@ def plot(labels_in_russian:bool=True, **kwargs):
       title="Число подтвержденных случаев COVID19 в регионах России на {lastdate}{title_suffix}",
       xlabel="Количество дней с момента {min_threshold}-го подтвержденного случая",
       ylabel="Подтвержденных случаев",
+      labels_in_russian=labels_in_russian,
+      plot_scale_markers=True,
       **kwargs)
   else:
     plot_(
@@ -53,6 +55,8 @@ def plot(labels_in_russian:bool=True, **kwargs):
       title="Confirmed COVID19 cases in regions of Russia, as of {lastdate}{title_suffix}",
       xlabel="Number of days since {min_threshold}th confirmed",
       ylabel="Confirmed cases",
+      labels_in_russian=labels_in_russian,
+      plot_scale_markers=True,
       **kwargs)
 
 def plot_sliding(labels_in_russian:bool=True, **kwargs):
@@ -62,6 +66,8 @@ def plot_sliding(labels_in_russian:bool=True, **kwargs):
       title="Скользящее среднее суточного числа заражений COVID19 в регионах России на {lastdate} за семь дней{title_suffix}",
       xlabel="Количество дней с момента превышения значения {min_threshold} заражений в сутки",
       ylabel="Суточное число заражений, среднее за 7 дней",
+      labels_in_russian=labels_in_russian,
+      plot_scale_markers=False,
       **kwargs)
   else:
     plot_(
@@ -69,6 +75,8 @@ def plot_sliding(labels_in_russian:bool=True, **kwargs):
       title="Moving average daily confirmed COVID19 cases in regions of Russia, as of {lastdate}, averaged for 7 days{title_suffix}",
       xlabel="Number of days since above {min_threshold}",
       ylabel="Daily confirmed case, 7-days moving average",
+      labels_in_russian=labels_in_russian,
+      plot_scale_markers=False,
       **kwargs)
 
 def plot_(metric_fn,
@@ -82,6 +90,7 @@ def plot_(metric_fn,
          moscow_italy_right_margin:int=5,
          rng:Tuple[Optional[int],Optional[int]]=(None,None),
          title_suffix:str='',
+         plot_scale_markers:bool=True
          )->None:
   plt.figure(figsize=(16, 6))
   plt.yscale('log')
@@ -146,7 +155,7 @@ def plot_(metric_fn,
                'Japan (ref)':'Япония (справ.)'}.get(cr,cr)
     else:
       label=ps or cr
-    label+=f" ({metric_fn(tl)[-1]})"
+    label+=f" ({int(metric_fn(tl)[-1])})"
 
     alpha=0.6 if cr in ['Italy (ref)','Japan (ref)'] else 1.0
     color={'Italy (ref)':'#d62728',
@@ -163,10 +172,11 @@ def plot_(metric_fn,
     else:
       return f'{x}% growth rate'
 
-  # plt.plot(range(max_tick),[min_metric*pow(1.05,x) for x in range(max_tick)],
-  #          color='grey', linestyle='--', label=_growth_rate_label(5), alpha=0.5)
-  # plt.plot(range(max_tick),[min_metric*pow(1.3,x) for x in range(max_tick)],
-  #          color='grey', linestyle='--', label=_growth_rate_label(30), alpha=0.5)
+  if plot_scale_markers:
+    plt.plot(range(max_tick),[min_metric*pow(1.05,x) for x in range(max_tick)],
+             color='grey', linestyle='--', label=_growth_rate_label(5), alpha=0.5)
+    plt.plot(range(max_tick),[min_metric*pow(1.3,x) for x in range(max_tick)],
+             color='grey', linestyle='--', label=_growth_rate_label(30), alpha=0.5)
   # plt.plot(range(max_tick),[min_metric*pow(1.85,x) for x in range(max_tick)],
   #          color='grey', linestyle='--', label=_growth_rate_label(85), alpha=0.5)
 
