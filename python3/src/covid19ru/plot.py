@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 from math import pow
 from typing import Dict, Optional, Tuple
-from .access import load, timelines, TimeLine, Province_State, Country_Region
+from .access import ( load, timelines, TimeLine, Province_State,
+    Country_Region, mktimeline )
 from .fetch import REGIONS_EN_RU
 from itertools import chain
 from datetime import datetime
@@ -18,16 +19,15 @@ def timelines_merge(tls, key1, key2, key_out):
   tl_m=_todict(tls[key1])
   tl_mo=_todict(tls[key2])
 
-  tl=TimeLine([],[],[],[])
+  dates=[]; cs=[]; ds=[]; rs=[]
   for d in sorted(list(set(tl_m.keys()).union(set(tl_mo.keys())))):
-    tl.dates.append(d)
+    dates.append(d)
     rm=tl_m.get(d,(0,0,0))
     rmo=tl_mo.get(d,(0,0,0))
-    tl.confirmed.append(rm[0]+rmo[0])
-    tl.deaths.append(rm[1]+rmo[1])
-    tl.recovered.append(rm[2]+rmo[2])
-  # print(tl)
-  tls[key_out]=tl
+    cs.append(rm[0]+rmo[0])
+    ds.append(rm[1]+rmo[1])
+    rs.append(rm[2]+rmo[2])
+  tls[key_out]=mktimeline(dates,cs,ds,rs)
   del tls[key1]
   del tls[key2]
   return tls
@@ -39,21 +39,58 @@ def timelines_preprocess(tls)->Dict[Tuple[Province_State,Country_Region],TimeLin
   del tls[('','Russia')]
   return tls
 
-def plot(confirmed_min_threshold=100,
+def plot(labels_in_russian:bool=True, **kwargs):
+  if labels_in_russian:
+    plot_(
+      metric_fn=lambda tl:tl.confirmed,
+      title="Число подтвержденных случаев COVID19 в регионах России на {lastdate}{title_suffix}",
+      xlabel="Количество дней с момента {min_threshold}-го подтвержденного случая",
+      ylabel="Подтвержденных случаев",
+      **kwargs)
+  else:
+    plot_(
+      metric_fn=lambda tl:tl.confirmed,
+      title="Confirmed COVID19 cases in regions of Russia, as of {lastdate}{title_suffix}",
+      xlabel="Number of days since {min_threshold}th confirmed",
+      ylabel="Confirmed cases",
+      **kwargs)
+
+def plot_sliding(labels_in_russian:bool=True, **kwargs):
+  if labels_in_russian:
+    plot_(
+      metric_fn=lambda tl:tl.daily_cases_ma7,
+      title="Скользящее среднее суточного числа заражений COVID19 в регионах России на {lastdate} за семь дней{title_suffix}",
+      xlabel="Количество дней с момента превышения значения {min_threshold} заражений в сутки",
+      ylabel="Среднее число заражений за 7 дней",
+      **kwargs)
+  else:
+    plot_(
+      metric_fn=lambda tl:tl.daily_cases_ma7,
+      title="Moving average daily confirmed COVID19 cases in regions of Russia, as of {lastdate}, averaged for 7 days{title_suffix}",
+      xlabel="Number of days since above {min_threshold}",
+      ylabel="Daily confirmed case, 7-days moving average",
+      **kwargs)
+
+def plot_(metric_fn,
+         xlabel:str,
+         ylabel:str,
+         title:str,
+         min_threshold=100,
          show:bool=False,
          save_name:Optional[str]=None,
          labels_in_russian:bool=False,
          moscow_italy_right_margin:int=5,
          rng:Tuple[Optional[int],Optional[int]]=(None,None),
-         title_suffix:str='')->None:
+         title_suffix:str='',
+         )->None:
   plt.figure(figsize=(16, 6))
   plt.yscale('log')
 
   max_tick=0
-  min_confirmed=99999999
+  min_metric=99999999
   tls=timelines_preprocess(timelines(country_region='Russia', default_loc=''))
   # tls=timelines(country_region='US', default_loc='')
-  tls_list=sorted(tls.items(), key=lambda i:-i[1].confirmed[-1])
+  tls_list=sorted(tls.items(), key=lambda i:-metric_fn(i[1])[-1])
   tls_list=tls_list[rng[0]:rng[1]]
   print([x[0] for x in tls_list])
   out:Dict[Tuple[str,str],TimeLine]=OrderedDict()
@@ -64,34 +101,40 @@ def plot(confirmed_min_threshold=100,
     out.update({('Moscow+MO (ref)','Russia'):tls[('Moscow+MO','Russia')]})
   lastdate=out[tls_list[0][0]].dates[-1]
 
-  # Calculate number of days to show
-  ndays_in_russia_after_threshold=moscow_italy_right_margin
-  for c in out[tls_list[0][0]].confirmed:
-    if c<=confirmed_min_threshold:
-      continue
-    ndays_in_russia_after_threshold+=1
+  # Calculate total number of days to show
+  leaders_days_after_threshold=moscow_italy_right_margin
+  threshold=False
+  for c in metric_fn(out[tls_list[0][0]]):
+    if c>min_threshold:
+      threshold=True
+    if threshold:
+      leaders_days_after_threshold+=1
 
   for (ps,cr),tl in out.items():
-    # print(ps,cr)
+    # Skip whole Russia which is similar to Moscow
     if len(ps)==0 and cr=='Russia':
-      continue # Skip whole Russia which is similar to Moscow
-    if tl.confirmed[-1]<10:
+      continue
+    # Skip low-data regions
+    if metric_fn(tl)[-1]<10:
       continue
 
-    ticks=[]; tick=0; confirmed=[]
-    for d,c in zip(tl.dates,tl.confirmed):
-      if c<=confirmed_min_threshold:
+    threshold=False
+    ticks=[]; tick=0; metric=[]
+    for d,c in zip(tl.dates,metric_fn(tl)):
+      if c>min_threshold:
+        threshold=True
+      if not threshold:
         continue
-      if tick>ndays_in_russia_after_threshold:
-        continue
+      if tick>leaders_days_after_threshold:
+        break
       ticks.append(tick)
-      confirmed.append(c)
+      metric.append(c)
       tick+=1
 
-    if len(confirmed)==0:
+    if len(metric)==0:
       continue
     max_tick=max(max_tick,tick)
-    min_confirmed=min(min_confirmed,confirmed[0])
+    min_metric=min(min_metric,metric[0])
 
     if labels_in_russian:
       label={'Moscow+MO':'Москва+область',
@@ -103,7 +146,7 @@ def plot(confirmed_min_threshold=100,
                'Japan (ref)':'Япония (справ.)'}.get(cr,cr)
     else:
       label=ps or cr
-    label+=f" ({tl.confirmed[-1]})"
+    label+=f" ({metric_fn(tl)[-1]})"
 
     alpha=0.6 if cr in ['Italy (ref)','Japan (ref)'] else 1.0
     color={'Italy (ref)':'#d62728',
@@ -112,7 +155,7 @@ def plot(confirmed_min_threshold=100,
           {'Italy (ref)':':',
            'Japan (ref)':':',
           }.get(cr))
-    p=plt.plot(ticks, confirmed, label=label, alpha=alpha, color=color, linestyle=ls)
+    p=plt.plot(ticks, metric, label=label, alpha=alpha, color=color, linestyle=ls)
 
   def _growth_rate_label(x):
     if labels_in_russian:
@@ -120,21 +163,16 @@ def plot(confirmed_min_threshold=100,
     else:
       return f'{x}% growth rate'
 
-  plt.plot(range(max_tick),[min_confirmed*pow(1.05,x) for x in range(max_tick)],
-           color='grey', linestyle='--', label=_growth_rate_label(5), alpha=0.5)
-  plt.plot(range(max_tick),[min_confirmed*pow(1.3,x) for x in range(max_tick)],
-           color='grey', linestyle='--', label=_growth_rate_label(30), alpha=0.5)
-  # plt.plot(range(max_tick),[min_confirmed*pow(1.85,x) for x in range(max_tick)],
+  # plt.plot(range(max_tick),[min_metric*pow(1.05,x) for x in range(max_tick)],
+  #          color='grey', linestyle='--', label=_growth_rate_label(5), alpha=0.5)
+  # plt.plot(range(max_tick),[min_metric*pow(1.3,x) for x in range(max_tick)],
+  #          color='grey', linestyle='--', label=_growth_rate_label(30), alpha=0.5)
+  # plt.plot(range(max_tick),[min_metric*pow(1.85,x) for x in range(max_tick)],
   #          color='grey', linestyle='--', label=_growth_rate_label(85), alpha=0.5)
 
-  if labels_in_russian:
-    plt.title(f"Число подтвержденных случаев COVID19 в регионах России на {lastdate.strftime('%d.%m.%Y')}{title_suffix}")
-    plt.xlabel(f"Количество дней с момента {confirmed_min_threshold}-го подтвержденного случая")
-    plt.ylabel("Подтвержденных случаев")
-  else:
-    plt.title(f"Confirmed COVID19 cases in regions of Russia, as of {lastdate.strftime('%d %B %Y')}{title_suffix}")
-    plt.xlabel(f"Number of days since {confirmed_min_threshold}th confirmed")
-    plt.ylabel("Confirmed cases")
+  plt.title(title.format(lastdate=lastdate.strftime('%d.%m.%Y'), title_suffix=title_suffix))
+  plt.xlabel(xlabel.format(min_threshold=min_threshold))
+  plt.ylabel(ylabel)
 
   from matplotlib.font_manager import FontProperties
   fontP = FontProperties()
