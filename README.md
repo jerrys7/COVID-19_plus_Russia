@@ -20,6 +20,15 @@ _Отказ от ответственности: автор не имеет от
 
 ### Contents
 
+* [Directory structure](#directory-structure)
+* [Visualization](#visualization)
+* [Data sources](#data-sources)
+* [Update procedure](#update-procedure)
+* [Road map](#road-map)
+* [Log](#log)
+
+### Directory structure
+
 * [csse_covid_19_data/csse_covid_19_daily_reports](./csse_covid_19_data/csse_covid_19_daily_reports)
   contains CSV files which were released by CSSE and later amended by us. Files
   released after March 25 were updates with additional information on Russian regions.
@@ -30,8 +39,6 @@ _Отказ от ответственности: автор не имеет от
   - [covid19ru.fetch](python3/src/covid19ru/fetch.py) Yandex data fetcher
   - [covid19ru.access](python3/src/covid19ru/access.py) Data accessor API
   - [covid19ru.plot](python3/src/covid19ru/plot.py) Matplotlib plotting
-
-### Data
 
 #### Visualization
 
@@ -55,8 +62,12 @@ _Отказ от ответственности: автор не имеет от
 
 [English version of the plot](python3/ruscovid_10_20.png)
 
-#### Data source description
+### Data sources
 
+#### Primary sources
+
+* [Yandex COVID19 map](https://yandex.ru/maps/covid19)
+  - The Yandex company provides current per-region numbers.
 * https://github.com/CSSEGISandData/COVID-19
   - Upstream world data by CSSE.
 * [Rospotrebnadzor](https://www.rospotrebnadzor.ru/about/info/news/)
@@ -64,14 +75,19 @@ _Отказ от ответственности: автор не имеет от
     Data is published in Russian as a plain text. The source provides daily
     difference per region and current total for the whole state. Example:
     <https://www.rospotrebnadzor.ru/about/info/news/news_details.php?ELEMENT_ID=14125>
-* [Yandex COVID19 map](https://yandex.ru/maps/covid19)
-  - The Yandex company provides current per-region numbers.
 * [NovelCoronaVirusChannel at Telegram](https://t.me/NovelCoronaVirusChannel)
   - Random COVID19 news in Russian.
 * <https://стопкоронавирус.рф//#>
 
+#### Related repos
 
-#### Update procedure
+* https://dash-coronavirus-2020.herokuapp.com
+* https://github.com/AlexxIT/YandexCOVID
+* https://github.com/klevin92/covid19_moscow_cases
+* https://github.com/wolfxyx/moscow-covid-19
+* https://github.com/AaronWard/covid-19-analysis
+
+### Update procedure
 
 Originally, author filled the data on Moscow and Saint Petersburg manually,
 based on `Rospotrebnadzor` and `NovelCoronaVirusChannel` data. Starting from
@@ -93,23 +109,13 @@ March, 25 we follow the below procedure:
            closest UTC timestamp.
         3. Update world information file by inserting russian details manually.
         4. Review the format compatibility (CSV fields order, date format, etc.).
-        5. Update RU timeline by calling `ru_timeline_dump()` of
+        5. Run the [checker script](./python3/src/covid19ru/check.py).
+        6. Update RU timeline by calling `ru_timeline_dump()` of
            [access.py](./python3/src/covid19ru/access.py).
-        6. Run the [checker script](./python3/src/covid19ru/check.py).
         7. Update plots by running [plot script](./python3/plot.py).
         8. Commit the changes to this repository, forcebly push (due to rebase)
            here.
 
-#### Related repos
-
-* https://github.com/AlexxIT/YandexCOVID
-* https://github.com/klevin92/covid19_moscow_cases
-* https://github.com/wolfxyx/moscow-covid-19
-
-Visualizations:
-
-* https://dash-coronavirus-2020.herokuapp.com
-* https://github.com/AaronWard/covid-19-analysis
 
 ### Roadmap
 
@@ -137,6 +143,10 @@ Visualizations:
 * Find data on Russian regions for pre- 25.03.2020 period.
 
 ### Log
+
+#### 21.04.2020
+
+* Added moving average plots
 
 #### 17.04.2020
 
