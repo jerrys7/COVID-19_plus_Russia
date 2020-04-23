@@ -49,6 +49,13 @@ _Отказ от ответственности: автор не имеет от
 [English version of the plot](python3/ruscovid_ma.png)
 
 
+**Daily cases in Russian regions, positions 11-21**
+
+![](python3/ruscovid_ru_ma_10_20.png)
+
+[English version of the plot](python3/ruscovid_ma_10_20.png)
+
+
 **Confirmed cases in Russian regions, Top-10**
 
 ![](python3/ruscovid_ru.png)
@@ -56,7 +63,7 @@ _Отказ от ответственности: автор не имеет от
 [English version of the plot](python3/ruscovid.png)
 
 
-**Confirmed cases in Russian regions, places 11-21**
+**Confirmed cases in Russian regions, positions 11-21**
 
 ![](python3/ruscovid_ru_10_20.png)
 
