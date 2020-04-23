@@ -87,7 +87,7 @@ def plot_(metric_fn,
          show:bool=False,
          save_name:Optional[str]=None,
          labels_in_russian:bool=False,
-         moscow_italy_right_margin:int=5,
+         right_margin:int=5,
          rng:Tuple[Optional[int],Optional[int]]=(None,None),
          title_suffix:str='',
          plot_scale_markers:bool=True
@@ -101,7 +101,6 @@ def plot_(metric_fn,
   # tls=timelines(country_region='US', default_loc='')
   tls_list=sorted(tls.items(), key=lambda i:-metric_fn(i[1])[-1])
   tls_list=tls_list[rng[0]:rng[1]]
-  print([x[0] for x in tls_list])
   out:Dict[Tuple[str,str],TimeLine]=OrderedDict()
   out.update({k:v for k,v in tls_list})
   out[('', 'Italy (ref)')]=list(timelines(country_region='Italy', default_loc='').values())[0]
@@ -111,13 +110,18 @@ def plot_(metric_fn,
   lastdate=out[tls_list[0][0]].dates[-1]
 
   # Calculate total number of days to show
-  leaders_days_after_threshold=moscow_italy_right_margin
+  leaders_days_after_threshold=0
   threshold=False
-  for c in metric_fn(out[tls_list[0][0]]):
-    if c>min_threshold:
-      threshold=True
-    if threshold:
-      leaders_days_after_threshold+=1
+  for (ps,cr),tl in tls_list:
+    ticks=0; threshold=False
+    for c in metric_fn(tl):
+      if c>min_threshold:
+        threshold=True
+      if threshold:
+        ticks+=1
+    if ticks>leaders_days_after_threshold:
+      leaders_days_after_threshold=ticks
+  leaders_days_after_threshold+=right_margin
 
   for (ps,cr),tl in out.items():
     # Skip whole Russia which is similar to Moscow
