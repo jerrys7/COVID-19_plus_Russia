@@ -155,6 +155,8 @@ March, 25 we follow the below procedure:
 
 * Shift towards future increased. File named '04-24-2020' contained data from
   04-25-2020,06:30 (approximately)
+* Update, this was a planned shift, ref.
+  https://github.com/CSSEGISandData/COVID-19/issues/2369
 
 #### 24.04.2020
 
