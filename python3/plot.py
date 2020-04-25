@@ -14,7 +14,7 @@ def plot_all():
 
   plot_sliding(show=True, save_name='ruscovid_ma.png', labels_in_russian=False,
        min_threshold=10, rng=(None,10), title_suffix=', Top-10')
-  plot_sliding(show=True, save_name='ruscovid_ma.png', labels_in_russian=False,
+  plot_sliding(show=True, save_name='ruscovid_ma_10_20.png', labels_in_russian=False,
        min_threshold=10, rng=(10,20), title_suffix=', Places 11..21', right_margin=1)
   plot_sliding(show=True, save_name='ruscovid_ru_ma.png', labels_in_russian=True,
        min_threshold=10, rng=(None,10), title_suffix=', первая десятка')
