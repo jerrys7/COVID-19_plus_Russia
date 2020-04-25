@@ -151,6 +151,16 @@ March, 25 we follow the below procedure:
 
 ### Log
 
+#### 25.04.2020
+
+* Shift towards future increased. File named '04-24-2020' contained data from
+  04-25-2020,06:30 (approximately)
+
+#### 24.04.2020
+
+* Noticed that upstream published today's measurements with unusually late
+  timestamp. File '04-23-2020' contains stamps of `04-24-2020 03:41`
+
 #### 21.04.2020
 
 * Added moving average plots
