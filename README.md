@@ -151,6 +151,10 @@ March, 25 we follow the below procedure:
 
 ### Log
 
+#### 28.04.2020
+
+* Number of deaths decreased in Altayskiy kray from 2 at 26.04.2020 to 1 at 27.04.2020
+
 #### 25.04.2020
 
 * Shift towards future increased. File named '04-24-2020' contained data from
