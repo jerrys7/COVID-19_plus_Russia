@@ -151,9 +151,15 @@ March, 25 we follow the below procedure:
 
 ### Log
 
+#### 30.04.2020
+
+* Another 'resurrected' case, this time in Lipetsk oblast: deaths decreased from
+  4 in 28.04.2020 to 2 in 29.04.2020.
+
 #### 28.04.2020
 
-* Number of deaths decreased in Altayskiy kray from 2 at 26.04.2020 to 1 at 27.04.2020
+* Number of deaths decreased in Altayskiy kray from 2 in 26.04.2020 to 1 in
+  27.04.2020
 
 #### 25.04.2020
 
