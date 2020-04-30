@@ -64,7 +64,7 @@ def check_file(filepath:str, cs:CheckerState)->List[Error]:
             assert row['Confirmed'] >= prow['Confirmed'], \
                 f"Confirmed decreased for {region} from {prow['Confirmed']} to {row['Confirmed']}"
             assert row['Deaths'] >= prow['Deaths'], \
-                f'Resurrected in {region}??'
+                f"Resurrected in {region}?? {prow['Deaths']} -> {row['Deaths']}"
             assert row['Recovered'] >= prow['Recovered'], \
                 f"Recovered decreased in {region} from {prow['Recovered']} to {row['Recovered']} (oh no!)"
           else:
