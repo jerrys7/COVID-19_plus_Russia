@@ -105,6 +105,8 @@ def plot_(metric_fn,
   out.update({k:v for k,v in tls_list})
   out[('', 'Italy (ref)')]=list(timelines(country_region='Italy', default_loc='').values())[0]
   out[('', 'Japan (ref)')]=list(timelines(country_region='Japan', default_loc='').values())[0]
+  out[('', 'Ukraine (ref)')]=list(timelines(country_region='Ukraine', default_loc='').values())[0]
+  out[('', 'Belarus (ref)')]=list(timelines(country_region='Belarus', default_loc='').values())[0]
   if ('Moscow+MO','Russia') not in out and ('Moscow+MO','Russia') in tls:
     out.update({('Moscow+MO (ref)','Russia'):tls[('Moscow+MO','Russia')]})
   lastdate=out[tls_list[0][0]].dates[-1]
@@ -156,17 +158,25 @@ def plot_(metric_fn,
       if label is None:
         label={'Russia':'Россия',
                'Italy (ref)':'Италия (справ.)',
-               'Japan (ref)':'Япония (справ.)'}.get(cr,cr)
+               'Japan (ref)':'Япония (справ.)',
+               'Ukraine (ref)':'Украина (справ.)',
+               'Belarus (ref)':'Беларусь (справ.)',
+               }.get(cr,cr)
     else:
       label=ps or cr
     label+=f" ({int(metric_fn(tl)[-1])})"
 
     alpha=0.6 if cr in ['Italy (ref)','Japan (ref)'] else 1.0
     color={'Italy (ref)':'#d62728',
-           'Japan (ref)':'#9467bd'}.get(cr)
+           'Japan (ref)':'#9467bd',
+           'Ukraine (ref)':'#9407bd',
+           'Belarus (ref)':'#94670d',
+           }.get(cr)
     ls={'Moscow+MO (ref)':':'}.get(ps,
           {'Italy (ref)':':',
            'Japan (ref)':':',
+           'Ukraine (ref)':':',
+           'Belarus (ref)':':',
           }.get(cr))
     p=plt.plot(ticks, metric, label=label, alpha=alpha, color=color, linestyle=ls)
 
