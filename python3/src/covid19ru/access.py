@@ -71,7 +71,9 @@ TimeLine=NamedTuple('TimeLine',[('dates',List[datetime]),
                                 ('deaths',List[int]),
                                 ('recovered',List[int]),
                                 ('daily_cases',List[int]),
-                                ('daily_cases_ma7',List[float])])
+                                ('daily_cases_ma7',List[float]),
+                                ('daily_deaths',List[int]),
+                                ('daily_deaths_ma7',List[float])])
 
 def daily_cases(l:List[int])->List[int]:
   res=[]
@@ -90,9 +92,11 @@ def ma7(l:List[int])->List[float]:
   return res
 
 def mktimeline(dates,confirmed,deaths,recovered)->TimeLine:
-  d=daily_cases(confirmed)
-  m=ma7(d)
-  return TimeLine(dates,confirmed,deaths,recovered,d,m)
+  dc=daily_cases(confirmed)
+  dd=daily_cases(deaths)
+  mc=ma7(dc)
+  md=ma7(dd)
+  return TimeLine(dates,confirmed,deaths,recovered,dc,mc,dd,md)
 
 Province_State=str  # City or region name
 Country_Region=str  # Country name
