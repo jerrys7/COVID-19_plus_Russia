@@ -111,6 +111,8 @@ def plot_(metric_fn,
     out.update({('Moscow+MO (ref)','Russia'):tls[('Moscow+MO','Russia')]})
   lastdate=out[tls_list[0][0]].dates[-1]
 
+  # print(out.keys())
+
   # Calculate total number of days to show
   leaders_days_after_threshold=0
   threshold=False
@@ -130,8 +132,8 @@ def plot_(metric_fn,
     if len(ps)==0 and cr=='Russia':
       continue
     # Skip low-data regions
-    if metric_fn(tl)[-1]<10:
-      continue
+    # if metric_fn(tl)[-1]<10:
+    #   continue
 
     threshold=False
     ticks=[]; tick=0; metric=[]
