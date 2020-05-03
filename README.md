@@ -151,6 +151,11 @@ March, 25 we follow the below procedure:
 
 ### Log
 
+#### 03.05.2020
+
+* Decline in death cases in Arkhangelsk oblast. 5 deaths were reported in
+  01.05.2020 but only 1 death left in reports in 02.05.2020.
+
 #### 30.04.2020
 
 * Another 'resurrected' case, this time in Lipetsk oblast: deaths decreased from
