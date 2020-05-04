@@ -47,7 +47,7 @@ def plot(labels_in_russian:bool=True, **kwargs):
       xlabel="Количество дней с момента {min_threshold}-го подтвержденного случая",
       ylabel="Подтвержденных случаев",
       labels_in_russian=labels_in_russian,
-      plot_scale_markers=True,
+      plot_scale_markers=False,
       **kwargs)
   else:
     plot_(
@@ -56,7 +56,7 @@ def plot(labels_in_russian:bool=True, **kwargs):
       xlabel="Number of days since {min_threshold}th confirmed",
       ylabel="Confirmed cases",
       labels_in_russian=labels_in_russian,
-      plot_scale_markers=True,
+      plot_scale_markers=False,
       **kwargs)
 
 def plot_sliding(labels_in_russian:bool=True, **kwargs):
