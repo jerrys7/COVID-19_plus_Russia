@@ -162,7 +162,7 @@ def plot_(metric_fn,
                'Italy (ref)':'Италия (справ.)',
                'Japan (ref)':'Япония (справ.)',
                'Ukraine (ref)':'Украина (справ.)',
-               'Belarus (ref)':'Беларусь (справ.)',
+               'Belarus (ref)':'Беларуссия (справ.)',
                }.get(cr,cr)
     else:
       label=ps or cr
