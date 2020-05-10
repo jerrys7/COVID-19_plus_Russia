@@ -105,10 +105,10 @@ def timelines(province_state:Optional[str]=None,
               country_region:Optional[str]=None,
               default_loc:Optional[str]=None)->Dict[Tuple[Province_State,Country_Region],TimeLine]:
   assert province_state is not None or country_region is not None
-  dates=defaultdict(list)
-  confirmed=defaultdict(list)
-  deaths=defaultdict(list)
-  recovered=defaultdict(list)
+  dates:dict=defaultdict(list)
+  confirmed:dict=defaultdict(list)
+  deaths:dict=defaultdict(list)
+  recovered:dict=defaultdict(list)
   keys=[]
   for d,df in load().items():
     if province_state is not None:

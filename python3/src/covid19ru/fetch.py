@@ -69,10 +69,11 @@ def fetch_yandex(dump_folder:Optional[str]=COVID19RU_PENDING)->PendingData:
     print(f'Saved {filepath}')
   return data
 
+def pending_timestamp(filepath:str)->datetime:
+  return datetime.strptime(splitext(basename(filepath))[0],TIME)
 
-
-def fetch_file(filepath:str, dump_folder:str=COVID19RU_PENDING)->PendingData:
-  ts:datetime=datetime.strptime(splitext(basename(filepath))[0],TIME)
+def fetch_pending(filepath:str, dump_folder:str=COVID19RU_PENDING)->PendingData:
+  ts:datetime=pending_timestamp(filepath)
   with open(join(dump_folder,filepath),'r') as f:
     d=json_load(f)
   data=PendingData(ts,d)

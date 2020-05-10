@@ -2,14 +2,64 @@ import matplotlib.pyplot as plt
 from math import pow
 from typing import Dict, Optional, Tuple
 from .access import ( load, timelines, TimeLine, Province_State,
-    Country_Region, mktimeline )
-from .fetch import REGIONS_EN_RU
+    Country_Region, mktimeline, walk, timedelta )
+from .fetch import ( REGIONS_EN_RU, COVID19RU_PENDING, fetch_pending,
+    pending_timestamp )
 from itertools import chain
 from datetime import datetime
 from collections import OrderedDict
 
 import locale
 locale.setlocale(locale.LC_TIME, "en_US")
+
+
+
+def plot_pending_changes():
+  data=[]
+  trh=datetime(2020,5,1)
+  for root, dirs, filenames in walk(COVID19RU_PENDING, topdown=True):
+    for filename in sorted(filenames):
+      if filename.endswith('json') and pending_timestamp(filename)>trh:
+        pd=fetch_pending(filename)
+        data.append((pd.utcnow, int(pd.val['Москва']['cases'])))
+  dates1,numbers=zip(*sorted(data))
+  plt.plot(dates1,numbers,marker='o',label='Avaliable measurements')
+
+  data=[]
+  dfs=load(country_region='Russia')
+  # print(list(dfs.values()[0])
+  for date,df in dfs.items():
+    if date>trh:
+      row=df[df['Province_State']=='Moscow'].iloc[0]
+      dt=datetime.fromisoformat(row['Last_Update'])
+      cnf=int(row['Confirmed'])
+      data.append((dt,cnf))
+  dates2,numbers=zip(*sorted(data))
+  plt.plot(dates2,numbers,marker='o',label='Included by us (as previous day)')
+
+  data=[]
+  for date,df in dfs.items():
+    if date>trh:
+      row=df[df['Combined_Key']=='Russia'].iloc[0]
+      dt=datetime.fromisoformat(row['Last_Update'])
+      cnf=int(row['Confirmed'])
+      data.append((dt,cnf))
+  dates3,numbers=zip(*sorted(data))
+  # plt.plot(dates3,numbers,marker='o')
+  args={'label':'Included by the Upstream'}
+  for date in dates3:
+    plt.axvline(date,0,1,color='green',**args)
+    args={}
+
+  date=min(dates1+dates2).replace(hour=0, minute=0, second=0, microsecond=0)
+  args={'label':'UTC midnight'}
+  while date<max(dates1+dates2):
+    plt.axvline(date,0,1,color='grey', alpha=0.5, **args)
+    date+=timedelta(days=1)
+    args={}
+  plt.legend(loc='upper left')
+  plt.title("Monitoring details (data is for Moscow, Russia)")
+
 
 
 def timelines_merge(tls, key1, key2, key_out):
