@@ -5,7 +5,7 @@ from os.path import (
     basename, join, isfile, isdir, islink, relpath, abspath, dirname, split,
     getsize, splitext )
 
-from .defs import COVID19RU_ROOT, COVID19RU_TSROOT
+from covid19ru.defs import ( COVID19RU_ROOT, COVID19RU_TSROOT )
 from pandas import DataFrame, read_csv, notnull
 from datetime import datetime
 from typing import ( Any, List, Dict, Tuple, NamedTuple, Optional )
